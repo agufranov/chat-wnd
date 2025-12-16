@@ -2,21 +2,17 @@ import { useCallback, useEffect, useMemo, useRef } from "react";
 import type { ListRowProps } from "react-virtualized";
 import { AutoSizer, List } from "react-virtualized";
 import style from "./MessageList.module.css";
+import type { Message } from "../../../shared/types";
 
-export type Message = {
-  id: string;
-  text: string;
-  author: string;
-  timestamp: Date;
-};
-
-interface ChatProps {
+interface MessageListProps {
   messages: Message[];
 }
 
 const DEFAULT_MSG_HEIGHT = 80;
 
-function Chat({ messages }: ChatProps) {
+export const MessageList: React.FC<MessageListProps> = ({
+  messages,
+}: MessageListProps) => {
   const listRef = useRef<List>(null);
   const itemHeights = useRef<Map<number, number>>(new Map());
 
@@ -82,7 +78,7 @@ function Chat({ messages }: ChatProps) {
       </AutoSizer>
     </div>
   );
-}
+};
 
 interface MessageRowProps {
   message: Message;
@@ -106,12 +102,10 @@ function MessageRow({ message, index, setRowHeight }: MessageRowProps) {
       <div className={style.messageHeader}>
         <span className={style.messageAuthor}>{message.author}</span>
         <span className={style.messageTime}>
-          {message.timestamp.toLocaleTimeString()}
+          {new Date(message.timestamp).toLocaleTimeString()}
         </span>
       </div>
       <div className={style.messageText}>{message.text}</div>
     </div>
   );
 }
-
-export default Chat;

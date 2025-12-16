@@ -1,0 +1,13 @@
+.main {
+  display: flex;
+  width: 1080px;
+  margin: 0 auto;
+}
+
+.sidebar {
+  flex-basis: 300px;
+}
+
+.content {
+  flex: 1;
+}
