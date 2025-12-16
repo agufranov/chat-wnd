@@ -1,0 +1,47 @@
+.chatContainer {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: #f5f5f5;
+}
+
+.message {
+  padding: 12px 16px;
+  margin-top: 10px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  margin-left: 16px;
+  margin-right: 16px;
+}
+
+.messageHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.messageAuthor {
+  font-weight: 600;
+  color: #333;
+  font-size: 14px;
+}
+
+.messageTime {
+  font-size: 12px;
+  color: #999;
+}
+
+.messageText {
+  color: #555;
+  font-size: 14px;
+  line-height: 1.5;
+  word-wrap: break-word;
+  white-space: pre-wrap;
+}
+
+.gridcell {
+  padding-top: 1px;
+}
