@@ -14,6 +14,7 @@
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
   margin-left: 16px;
   margin-right: 16px;
+  width: 50%;
 }
 
 .messageHeader {

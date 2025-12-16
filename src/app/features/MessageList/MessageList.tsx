@@ -1,68 +1,69 @@
-import { List, AutoSizer } from 'react-virtualized'
-import { useMemo, useRef, useCallback, useEffect } from 'react'
-import type { ListRowProps } from 'react-virtualized'
-import style from './Chat.module.css'
+import { useCallback, useEffect, useMemo, useRef } from "react";
+import type { ListRowProps } from "react-virtualized";
+import { AutoSizer, List } from "react-virtualized";
+import style from "./MessageList.module.css";
 
 export type Message = {
-  id: string
-  text: string
-  author: string
-  timestamp: Date
-}
+  id: string;
+  text: string;
+  author: string;
+  timestamp: Date;
+};
 
 interface ChatProps {
-  messages: Message[]
+  messages: Message[];
 }
 
-const DEFAULT_MSG_HEIGHT = 80
+const DEFAULT_MSG_HEIGHT = 80;
 
 function Chat({ messages }: ChatProps) {
-  const listRef = useRef<List>(null)
-  const itemHeights = useRef<Map<number, number>>(new Map())
+  const listRef = useRef<List>(null);
+  const itemHeights = useRef<Map<number, number>>(new Map());
 
-  const reversedMessages = useMemo(() => [...messages].reverse(), [messages])
+  const reversedMessages = useMemo(() => [...messages].reverse(), [messages]);
 
-  const getRowHeight = useCallback(
-    ({ index }: { index: number }) => {
-      return itemHeights.current.get(index) || DEFAULT_MSG_HEIGHT
-    },
-    []
-  )
+  const getRowHeight = useCallback(({ index }: { index: number }) => {
+    return itemHeights.current.get(index) || DEFAULT_MSG_HEIGHT;
+  }, []);
 
   const setRowHeight = useCallback((index: number, height: number) => {
     if (itemHeights.current.get(index) !== height) {
-      itemHeights.current.set(index, height)
-      listRef.current?.recomputeRowHeights(index)
+      itemHeights.current.set(index, height);
+      listRef.current?.recomputeRowHeights(index);
     }
-  }, [])
+  }, []);
 
   const rowRenderer = useCallback(
     ({ index, key, style }: ListRowProps) => {
-      const message = reversedMessages[index]
+      const message = reversedMessages[index];
 
       return (
-        <div key={key} className={style.gridcell} style={{
-          ...style
-        }}>
+        <div
+          key={key}
+          className={style.gridcell}
+          style={{
+            ...style,
+          }}
+        >
           <MessageRow
             message={message}
             index={index}
             setRowHeight={setRowHeight}
           />
-        </div >
-      )
+        </div>
+      );
     },
     [reversedMessages, setRowHeight]
-  )
+  );
 
   // Прокручиваем вниз при добавлении новых сообщений
   useEffect(() => {
     if (listRef.current && reversedMessages.length > 0) {
       setTimeout(() => {
-        listRef.current?.scrollToRow(reversedMessages.length - 1)
-      }, 0)
+        listRef.current?.scrollToRow(reversedMessages.length - 1);
+      }, 0);
     }
-  }, [reversedMessages.length])
+  }, [reversedMessages.length]);
 
   return (
     <div className={style.chatContainer}>
@@ -80,25 +81,25 @@ function Chat({ messages }: ChatProps) {
         )}
       </AutoSizer>
     </div>
-  )
+  );
 }
 
 interface MessageRowProps {
-  message: Message
-  index: number
-  setRowHeight: (index: number, height: number) => void
+  message: Message;
+  index: number;
+  setRowHeight: (index: number, height: number) => void;
 }
 
 // Компонент для измерения высоты
 function MessageRow({ message, index, setRowHeight }: MessageRowProps) {
-  const rowRef = useRef<HTMLDivElement>(null)
+  const rowRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (rowRef.current) {
-      const height = rowRef.current.getBoundingClientRect().height
-      setRowHeight(index, height)
+      const height = rowRef.current.getBoundingClientRect().height;
+      setRowHeight(index, height);
     }
-  }, [index, setRowHeight, message])
+  }, [index, setRowHeight, message]);
 
   return (
     <div ref={rowRef} className={style.message}>
@@ -110,7 +111,7 @@ function MessageRow({ message, index, setRowHeight }: MessageRowProps) {
       </div>
       <div className={style.messageText}>{message.text}</div>
     </div>
-  )
+  );
 }
 
-export default Chat
+export default Chat;
