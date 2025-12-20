@@ -1,6 +1,12 @@
-import React, { useEffect, type ReactElement, type ReactNode } from "react";
+import React, {
+  useEffect,
+  useMemo,
+  type ReactElement,
+  type ReactNode,
+} from "react";
 import { useChatStore } from "../../store/chatStore";
 import type { Chat } from "../../shared/types";
+import style from "./ChatList.module.css";
 
 type ChatListProps = {
   selectedChat: Chat | null;
@@ -17,9 +23,16 @@ export const ChatList: React.FC<ChatListProps> = ({
     loadChats();
   }, []);
 
+  const sortedChats = useMemo(() => {
+    return [...chats].sort(
+      (a, b) =>
+        (a.lastMessage?.timestamp || 0) - (b.lastMessage?.timestamp || 0)
+    );
+  }, [chats]);
+
   return (
     <div>
-      {chats.map((chat) => (
+      {sortedChats.map((chat) => (
         <div
           key={chat.id}
           style={{
@@ -27,7 +40,13 @@ export const ChatList: React.FC<ChatListProps> = ({
           }}
           onClick={() => onChatSelected(chat)}
         >
-          {chat.name}
+          <div>{chat.name}</div>
+          {chat.lastMessage && (
+            <div className={style.lastMessage}>
+              <strong>{chat.lastMessage.author}</strong>:{" "}
+              {chat.lastMessage.text}
+            </div>
+          )}
         </div>
       ))}
     </div>

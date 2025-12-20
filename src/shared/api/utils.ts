@@ -5,6 +5,8 @@ export const range = (n: number) => [...Array(n).keys()];
 
 export const rnd = (n: number) => Math.floor(Math.random() * n);
 
+export const rndFrom = <T>(a: Array<T>) => a[rnd(a.length)];
+
 export const randomId = () => Math.random().toString(36).substring(2, 10);
 
 export const sleep = (delay: number) =>
@@ -21,7 +23,7 @@ export const generateMessages = (chatId: string, length = 5000): Message[] => {
 
   return range(length).map((i) => {
     const author = authors[i % authors.length];
-    const isLong = i % 3 === 0;
+    const isLong = rnd(2) === 1;
     const text = isLong
       ? longTexts[i % longTexts.length]
       : shortTexts[i % shortTexts.length];
@@ -42,3 +44,23 @@ export const generateChats = (length = 8): Chat[] => {
     id: i.toString(),
   }));
 };
+
+export class EventBus<T extends { [eventName: string]: unknown }> {
+  private listeners: { [K in keyof T]: ((payload: T[K]) => void)[] } = {}; //as { [K in keyof T]: ((payload: T[K]) => void)[] };
+
+  on<K extends keyof T>(event: K, callback: (payload: T[K]) => void) {
+    if (!this.listeners[event]) this.listeners[event] = [];
+    this.listeners[event].push(callback);
+  }
+
+  off<K extends keyof T>(event: K, callback: (payload: T[K]) => void) {
+    if (!this.listeners[event]) return;
+    this.listeners[event] = this.listeners[event].filter(
+      (listener) => listener !== callback
+    );
+  }
+
+  emit<K extends keyof T>(event: K, payload: T[K]) {
+    this.listeners?.[event]?.forEach((listener) => listener(payload));
+  }
+}

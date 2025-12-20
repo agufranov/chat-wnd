@@ -6,9 +6,11 @@ import type { Chat } from "../shared/types";
 import { useChatStore } from "../store/chatStore";
 
 function App() {
-  const { loadMessages } = useChatStore();
+  const { loadMessages, subscribe } = useChatStore();
 
   const [selectedChat, setSelectedChat] = useState<Chat | null>(null);
+
+  useEffect(() => subscribe(console.log), []);
 
   return (
     <main className={style.main}>
