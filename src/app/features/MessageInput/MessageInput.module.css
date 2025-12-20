@@ -1,0 +1,9 @@
+.root {
+  padding: 16px;
+  height: 64px;
+  display: flex;
+  align-items: stretch;
+}
+
+.input {
+}
