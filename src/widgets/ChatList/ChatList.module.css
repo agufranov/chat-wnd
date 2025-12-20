@@ -1,7 +1,28 @@
+.root {
+  border: 1px solid #e0e0e0;
+  overflow: auto;
+  height: 100vh;
+  box-sizing: border-box;
+}
+
+.item {
+  padding: 8px;
+  /* background-color: #f5f5f5; */
+  background-color: white;
+  border-bottom: 1px solid #e0e0e0;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #f0f0f0;
+  }
+
+  &.itemSelected {
+    background-color: #e3f2fd;
+  }
+}
+
 .lastMessage {
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
+  white-space: nowrap;
 }

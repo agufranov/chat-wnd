@@ -5,7 +5,9 @@
 }
 
 .sidebar {
-  flex-basis: 300px;
+  --width: 300px;
+  width: var(--width);
+  flex-basis: var(--width);
 }
 
 .content {

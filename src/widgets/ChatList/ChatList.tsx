@@ -7,6 +7,7 @@ import React, {
 import { useChatStore } from "../../store/chatStore";
 import type { Chat } from "../../shared/types";
 import style from "./ChatList.module.css";
+import cn from "classnames";
 
 type ChatListProps = {
   selectedChat: Chat | null;
@@ -31,20 +32,23 @@ export const ChatList: React.FC<ChatListProps> = ({
   }, [chats]);
 
   return (
-    <div>
+    <div className={style.root}>
       {sortedChats.map((chat) => (
         <div
           key={chat.id}
-          style={{
-            fontWeight: selectedChat?.id === chat.id ? "bold" : "normal",
-          }}
+          className={cn(style.item, {
+            [style.itemSelected]: selectedChat?.id === chat.id,
+          })}
           onClick={() => onChatSelected(chat)}
         >
           <div>{chat.name}</div>
           {chat.lastMessage && (
             <div className={style.lastMessage}>
-              <strong>{chat.lastMessage.author}</strong>:{" "}
-              {chat.lastMessage.text}
+              <span className={style.lastMessageText}>
+                <strong>{chat.lastMessage.author}</strong>:{" "}
+                {chat.lastMessage.text}
+              </span>
+              <span>{chat.lastMessage.timestamp}</span>
             </div>
           )}
         </div>
