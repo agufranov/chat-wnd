@@ -9,6 +9,20 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  --bg-primary: #ffffff;
+  --bg-secondary: #f5f5f5;
+  --text-primary: #1a1a1a;
+  --text-secondary: #666666;
+  --border-color: #e0e0e0;
+  --hover-bg: #f0f0f0;
+  --selected-bg: #e3f2fd;
+  --primary-color: #1976d2;
+  --primary-hover: #1565c0;
+  --message-own-bg: #dcf8c6;
+  --message-own-text: #1a1a1a;
+  --message-other-bg: #ffffff;
+  --message-other-text: #1a1a1a;
 }
 
 .root {
@@ -17,4 +31,8 @@
 
 body {
   margin: 0;
+}
+
+* {
+  box-sizing: border-box;
 }
