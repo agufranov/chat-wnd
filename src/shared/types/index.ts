@@ -6,6 +6,7 @@ export type Chat = {
 
 export type Message = {
   id: string;
+  chatId: Chat["id"];
   timestamp: number;
   text: string;
   author: string | null; // для простоты, null - у моих сообщений

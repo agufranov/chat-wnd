@@ -1,8 +1,19 @@
+import { useEffect } from "react";
 import { MessageList } from "../../app/features/MessageList/MessageList";
-import { useMessages } from "./useMessages";
+import { useChatStore } from "@/store/chatStore";
 
-export const ChatWindow: React.FC = () => {
-  const messages = useMessages();
+type ChatWindowProps = {
+  chatId: string | null;
+};
 
-  return <MessageList messages={messages} />;
+export const ChatWindow: React.FC<ChatWindowProps> = ({ chatId }) => {
+  const { messages, loadMessages } = useChatStore();
+
+  useEffect(() => {
+    if (chatId !== null) loadMessages(chatId);
+  }, [chatId]);
+
+  if (chatId === null) return null;
+
+  return <MessageList messages={messages[chatId] ?? []} />;
 };
