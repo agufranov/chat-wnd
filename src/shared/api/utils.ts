@@ -30,9 +30,11 @@ export const generateMessages = (chatId: string, length = 5000): Message[] => {
 
     return {
       id: `msg-${i}`,
-      text: `${text} (сообщение #${i + 1})`,
+      text: `${text}`,
       author,
-      timestamp: +new Date(Date.now() - (1000 - i) * 60000),
+      timestamp: +new Date(
+        Date.now() - rnd(5) * 86_400_000 - (1000 - i) * 60000
+      ),
       chatId,
     };
   });
@@ -46,7 +48,9 @@ export const generateChats = (length = 8): Chat[] => {
 };
 
 export class EventBus<T extends { [eventName: string]: unknown }> {
-  private listeners: { [K in keyof T]: ((payload: T[K]) => void)[] } = {}; //as { [K in keyof T]: ((payload: T[K]) => void)[] };
+  private listeners = {} as {
+    [K in keyof T]: ((payload: T[K]) => void)[];
+  };
 
   on<K extends keyof T>(event: K, callback: (payload: T[K]) => void) {
     if (!this.listeners[event]) this.listeners[event] = [];

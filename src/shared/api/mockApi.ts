@@ -72,4 +72,4 @@ export const mockApi = {
 
 setInterval(() => {
   mockApi.addIncomingMessage();
-}, 1000);
+}, 300);
