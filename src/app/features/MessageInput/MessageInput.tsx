@@ -12,7 +12,7 @@ export const MessageInput: React.FC<MessageInputProps> = ({ onSubmit }) => {
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     setInputState("");
-    onSubmit(inputState);
+    onSubmit(inputState.trim());
   };
 
   return (
@@ -20,11 +20,14 @@ export const MessageInput: React.FC<MessageInputProps> = ({ onSubmit }) => {
       <input
         className={style.input}
         value={inputState}
+        placeholder="Введите сообщение..."
         onInput={(e) =>
           setInputState((e.currentTarget as HTMLInputElement).value)
         }
       />
-      <button type="submit">Send</button>
+      <button type="submit" disabled={!inputState}>
+        Отправить
+      </button>
     </form>
   );
 };

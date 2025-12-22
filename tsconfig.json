@@ -8,8 +8,20 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
-    }
+    },
+    "jsx": "react-jsx",
+    "types": ["jest", "node", "@testing-library/jest-dom"],
+    "esModuleInterop": true
   },
-  "include": ["src/**/*"],
+  "include": [
+    "src",
+    "src/**/*",
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "src/**/*.test.tsx",
+    "src/**/*.spec.tsx",
+    "src/setupTests.ts",
+    "src/global.d.ts"
+  ],
   "exclude": ["node_modules"]
 }

@@ -8,6 +8,7 @@ type ChatStore = {
   messages: { [chatId: string]: Message[] };
   loadChats: () => Promise<void>;
   loadMessages: (chatId: string) => Promise<void>;
+  subscribe: () => void;
 };
 
 export const useChatStore = create<ChatStore>()(
