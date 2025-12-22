@@ -23,12 +23,12 @@ const events = new EventBus<{ message: Message }>();
 
 export const mockApi = {
   events,
-  getChats: (): Promise<Chat[]> => Promise.resolve(chats),
+  getChats: (): Promise<Chat[]> => Promise.resolve(chats.map(chat => ({...chat}))),
   getChatMessages: (chatId: string): Message[] => {
     console.log(chatId);
     chatMessages[chatId] ??= generateMessages(chatId);
 
-    return chatMessages[chatId];
+    return [...chatMessages[chatId]];
   },
   sendMessage: async (chatId: string, message: Message) => {
     chatMessages[chatId] ??= [];
@@ -61,5 +61,5 @@ export const mockApi = {
 };
 
 setInterval(() => {
-  // mockApi.addIncomingMessage();
+  mockApi.addIncomingMessage();
 }, 1000);

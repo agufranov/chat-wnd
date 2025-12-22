@@ -15,12 +15,16 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({ chatId }) => {
     if (chatId !== null) loadMessages(chatId);
   }, [chatId]);
 
-  if (chatId === null) return null;
-
   return (
     <div className={style.container}>
-      <MessageList messages={messages[chatId] ?? []} />
-      <MessageInput onSubmit={(e) => console.log(e)} />
+      {chatId ? (
+        <>
+          <MessageList messages={messages[chatId] ?? []} />
+          <MessageInput onSubmit={(e) => console.log(e)} />
+        </>
+      ) : (
+        <span>Выберите чат</span>
+      )}
     </div>
   );
 };

@@ -21,7 +21,7 @@ function App() {
         />
       </aside>
       <section className={style.content}>
-        <ChatWindow chatId={selectedChat?.id ?? null} />
+        <ChatWindow key={selectedChat?.id} chatId={selectedChat?.id ?? null} />
       </section>
     </main>
   );

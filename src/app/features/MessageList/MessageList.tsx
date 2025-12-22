@@ -9,6 +9,7 @@ interface MessageListProps {
 }
 
 const DEFAULT_MSG_HEIGHT = 80;
+const MSG_MARGIN = 12;
 
 export const MessageList: React.FC<MessageListProps> = ({
   messages,
@@ -16,7 +17,8 @@ export const MessageList: React.FC<MessageListProps> = ({
   const listRef = useRef<List>(null);
   const itemHeights = useRef<Map<number, number>>(new Map());
 
-  const reversedMessages = useMemo(() => [...messages].reverse(), [messages]);
+  // const reversedMessages = useMemo(() => [...messages].reverse(), [messages]);
+  const reversedMessages = messages;
 
   const getRowHeight = useCallback(({ index }: { index: number }) => {
     return itemHeights.current.get(index) || DEFAULT_MSG_HEIGHT;
@@ -24,7 +26,7 @@ export const MessageList: React.FC<MessageListProps> = ({
 
   const setRowHeight = useCallback((index: number, height: number) => {
     if (itemHeights.current.get(index) !== height) {
-      itemHeights.current.set(index, height);
+      itemHeights.current.set(index, height + MSG_MARGIN);
       listRef.current?.recomputeRowHeights(index);
     }
   }, []);
