@@ -1,4 +1,4 @@
-import { useState, type FormEvent } from "react";
+import { useEffect, useRef, useState, type FormEvent } from "react";
 import type React from "react";
 import style from "./MessageInput.module.css";
 import Send from "./assets/send.svg?react";
@@ -9,6 +9,11 @@ type MessageInputProps = {
 
 export const MessageInput: React.FC<MessageInputProps> = ({ onSubmit }) => {
   const [inputState, setInputState] = useState("");
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    inputRef.current?.focus();
+  }, []);
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
@@ -25,6 +30,7 @@ export const MessageInput: React.FC<MessageInputProps> = ({ onSubmit }) => {
         onInput={(e) =>
           setInputState((e.currentTarget as HTMLInputElement).value)
         }
+        ref={inputRef}
       />
       <button type="submit" disabled={!inputState}>
         <Send width={24} height={24} />

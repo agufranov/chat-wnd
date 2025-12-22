@@ -3,6 +3,7 @@ import type { ListRowProps } from "react-virtualized";
 import { AutoSizer, List } from "react-virtualized";
 import style from "./MessageList.module.css";
 import type { Message } from "../../../shared/types";
+import cn from "classnames";
 
 interface MessageListProps {
   messages: Message[];
@@ -100,14 +101,19 @@ function MessageRow({ message, index, setRowHeight }: MessageRowProps) {
   }, [index, setRowHeight, message]);
 
   return (
-    <div ref={rowRef} className={style.message}>
+    <div
+      ref={rowRef}
+      className={cn(style.message, { [style.messageMy]: !message.author })}
+    >
       <div className={style.messageHeader}>
-        <span className={style.messageAuthor}>{message.author}</span>
+        <span className={style.messageAuthor}>{message.author ?? "Вы"}</span>
         <span className={style.messageTime}>
           {new Date(message.timestamp).toLocaleTimeString()}
         </span>
       </div>
-      <div className={style.messageText}>{message.text}</div>
+      <div className={style.messageText}>
+        {message.status === "pending" ? "......" : message.text}
+      </div>
     </div>
   );
 }

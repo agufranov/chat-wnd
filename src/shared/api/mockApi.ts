@@ -34,12 +34,15 @@ export const mockApi = {
   },
 
   sendMessage: async (chatId: string, text: string) => {
+    await sleep(rnd(300) + 150); // искусственная задержка
+
     const message: Message = {
       id: randomId(),
       timestamp: +new Date(),
       text,
       chatId,
       author: null,
+      status: "sent",
     };
 
     chatMessages[chatId] ??= [];
@@ -48,7 +51,6 @@ export const mockApi = {
 
     chatMessages[chatId].unshift(message);
 
-    await sleep(rnd(300) + 150);
     return message;
   },
 
@@ -60,6 +62,7 @@ export const mockApi = {
       author: "New author",
       chatId: chat.id,
       timestamp: +new Date(),
+      status: "sent",
     };
     chatMessages[chat.id].unshift(message);
     chat.lastMessage = message;

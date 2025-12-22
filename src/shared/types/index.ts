@@ -9,5 +9,6 @@ export type Message = {
   chatId: Chat["id"];
   timestamp: number;
   text: string;
-  author: string | null; // для простоты, null - у моих сообщений
+  author: string | null; // для простоты, у моих сообщений sender будет равен null
+  status: "pending" | "sent" | "failed";
 };
