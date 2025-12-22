@@ -15,6 +15,7 @@ const MSG_MARGIN = 12;
 export const MessageList: React.FC<MessageListProps> = ({
   messages,
 }: MessageListProps) => {
+  const containerRef = useRef<HTMLElement>(null);
   const listRef = useRef<List>(null);
   const itemHeights = useRef<Map<number, number>>(new Map());
 
@@ -65,7 +66,7 @@ export const MessageList: React.FC<MessageListProps> = ({
   }, [reversedMessages.length]);
 
   return (
-    <div className={style.chatContainer}>
+    <div className={style.chatContainer} ref={containerRef}>
       <AutoSizer>
         {({ height, width }: { height: number; width: number }) => (
           <List
@@ -76,6 +77,7 @@ export const MessageList: React.FC<MessageListProps> = ({
             rowHeight={getRowHeight}
             rowRenderer={rowRenderer}
             overscanRowCount={5}
+            scrollToIndex={reversedMessages.length - 1}
           />
         )}
       </AutoSizer>
