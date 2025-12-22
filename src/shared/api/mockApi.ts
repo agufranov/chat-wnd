@@ -16,7 +16,7 @@ type MessageCache = { [chatId: string]: Message[] };
 
 const chatMessages: MessageCache = chats.reduce((agg, { id }) => {
   agg[id] = generateMessages(id);
-  chats.find((chat) => chat.id === id)!.lastMessage = agg[id][0];
+  chats.find((chat) => chat.id === id)!.lastMessage = agg[id].slice(-1)[0];
   return agg;
 }, {} as MessageCache);
 

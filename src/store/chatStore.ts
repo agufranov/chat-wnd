@@ -31,7 +31,7 @@ export const useChatStore = create<ChatStore>()(
           if (chat) {
             const chatToUpdate = state.chats.find(({ id }) => id === chat.id);
             if (!chatToUpdate) return;
-            chatToUpdate.lastMessage = messages[0];
+            chatToUpdate.lastMessage = messages[messages.length - 1];
           }
         });
       },

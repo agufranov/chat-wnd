@@ -51,7 +51,7 @@ export const generateMessages = (chatId: string, length = 5000): Message[] => {
 
 export const generateChats = (length = 8): Chat[] => {
   return range(length).map((i) => ({
-    name: `Chat #${i}`,
+    name: `Чат #${i}`,
     id: i.toString(),
   }));
 };
