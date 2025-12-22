@@ -10,7 +10,7 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  --bg-primary: #ffffff;
+  /* --bg-primary: #ffffff;
   --bg-secondary: #f5f5f5;
   --text-primary: #1a1a1a;
   --text-secondary: #666666;
@@ -22,7 +22,78 @@
   --message-own-bg: #dce8f6;
   --message-own-text: #1a1a1a;
   --message-other-bg: #ffffff;
-  --message-other-text: #1a1a1a;
+  --message-other-text: #1a1a1a; */
+
+  /* Основные цвета */
+  --color-primary: #6c63ff; /* Яркий сиреневый */
+  --color-primary-light: #8a84ff;
+  --color-primary-dark: #554fd8;
+
+  /* Фоны */
+  --color-bg-primary: #f5f7ff; /* Очень светлый сиреневый */
+  --color-bg-secondary: #ffffff;
+  --color-bg-tertiary: #eaedff;
+
+  /* Список чатов */
+  --color-chat-bg: var(--color-bg-secondary);
+  --color-chat-hover: #f5f7ff;
+  --color-chat-active: #eaedff;
+  --color-chat-border: #e1e6ff;
+
+  /* Сообщения */
+  --color-message-my-bg: linear-gradient(135deg, #6c63ff, #554fd8);
+  --color-message-my-text: #ffffff;
+  --color-message-other-bg: #ffffff;
+  --color-message-other-text: #2d3047;
+  --color-message-border: #e1e6ff;
+
+  /* Градиенты для акцентов */
+  --gradient-primary: linear-gradient(135deg, #6c63ff, #554fd8);
+  --gradient-hover: linear-gradient(135deg, #8a84ff, #6c63ff);
+
+  /* Статусы */
+  --color-message-delivered: #7a9d54;
+  --color-message-read: #4a7c59;
+  --color-message-pending: #d4a762;
+
+  /* Текст */
+  --color-text-primary: #4a3c2a;
+  --color-text-secondary: #8b7355;
+  --color-text-tertiary: #a8987a;
+
+  /* Интерактивные элементы */
+  --color-button-primary: var(--color-primary);
+  --color-button-primary-hover: var(--color-primary-dark);
+  --color-button-secondary: #e8ecef;
+  --color-button-secondary-hover: #d5dbe1;
+
+  /* Границы и разделители */
+  --color-border-light: #e8ecef; /* Легкие границы */
+  --color-border-medium: #d5dbe1; /* Средние границы */
+  --color-border-dark: #bdc3c7; /* Темные границы */
+
+  /* Тени */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.05);
+
+  /* Радиусы */
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --radius-full: 9999px;
+
+  /* Отступы */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+
+  /* Анимации */
+  --transition-fast: 150ms ease;
+  --transition-normal: 250ms ease;
+  --transition-slow: 350ms ease;
 }
 
 .root {
