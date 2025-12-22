@@ -15,10 +15,13 @@ export const useChatStore = create<ChatStore>()(
   immer((set, get) => {
     return {
       chats: [],
+
       messages: {},
+
       loadChats: async () => {
         set({ chats: await mockApi.getChats() });
       },
+
       loadMessages: async (chatId: string) => {
         const messages = await mockApi.getChatMessages(chatId);
         const chat = get().chats.find(({ id }) => id === chatId);
@@ -31,6 +34,7 @@ export const useChatStore = create<ChatStore>()(
           }
         });
       },
+
       subscribe: () => {
         const fn = (message: Message) => {
           const chat = get().chats.find(({ id }) => id === message.chatId);

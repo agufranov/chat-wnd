@@ -1,6 +1,7 @@
 import { useState, type FormEvent } from "react";
 import type React from "react";
 import style from "./MessageInput.module.css";
+import Send from "./assets/send.svg?react";
 
 type MessageInputProps = {
   onSubmit: (message: string) => void;
@@ -26,6 +27,7 @@ export const MessageInput: React.FC<MessageInputProps> = ({ onSubmit }) => {
         }
       />
       <button type="submit" disabled={!inputState}>
+        <Send width={24} height={24} />
         Отправить
       </button>
     </form>
