@@ -1,73 +1,28 @@
-# React + TypeScript + Vite
+# Запуск проекта:
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```
+npm install
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+# Комментарии
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+###1. Выбор state-менеджера.
+Я выбрал Zustand, потому что он хорошо подходит для легковесного проекта, хорошо работает с typescript, хорошо документирован и требует меньше шаблонного кода.
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+###2. Потенциальные улучшения.
+
+- _Дублирование сообщений._ Сообщение может стать неконсистентным, если сервер его принял, но до клиента не дошёл ответ сервера. В таком случае на клиенте сообщение останется в состоянии "не отправлено". Если повторить отправку - оно задублируется. Такую проблему я наблюдал во многих мессенджерах. Решение - использовать криптографически надежный локально сгенерированный id для проверки на дублирование.
+
+- _Синхронизация оффлайн и онлайн истории._ В реальной ситуации прошлые сообщения могут быть изменены или удалены. Для этого можно использовать готовые решения (Pocketbase, Dexie).
+
+- _Хранение данных на клиенте и потенциальные проблемы._
+
+> Моё решение здесь - сохранять сообщения в общий кэш, который никогда не очищается. Проблемы: утечка памяти.
+
+> Другое возможное решение - хранить сообщения только текущего чата. Проблемы: пользователь при переходе в новый чат будет каждый раз ждать загрузки всех сообщений.
+
+> Решение: LRU-кэш с временем жизни (TTL). Сообщения хранятся на клиенте до тех пор, пока кэш не переполится, или пока время жизни чата не истечет.
+Вариант избежать утечек памяти: Хранить данные в IndexedDB. Иметь кэш первого уровня (память), второго уровня (IndexedDB) и третьего уровня (бэкенд).
+
+- В текущей реализации, при получении нового сообщения происходит перерендер и скролл вниз. Это известный баг react-virtualized. Чтобы избежать - нужно писать кастомное решение.
