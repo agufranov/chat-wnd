@@ -9,6 +9,9 @@
   padding: 8px;
   background-color: var(--bg-primary);
   border-bottom: 1px solid var(--color-border-light);
+  display: flex;
+  gap: 8px;
+  overflow: hidden;
 
   cursor: pointer;
   transition: color, background ease 0.3s;
@@ -24,10 +27,32 @@
   }
 }
 
+.avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: green;
+  flex: 0 0 auto;
+}
+
+.messagePreview {
+  flex: 1;
+  overflow: hidden;
+}
+
 .lastMessage {
+  display: flex;
+  color: var(--text-secondary);
+  font-size: 12px;
+}
+
+.lastMessageText {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  color: var(--text-secondary);
-  font-size: 12px;
+}
+
+.lastMessageTimestamp {
+  margin-left: auto;
+  white-space: nowrap;
 }

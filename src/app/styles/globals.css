@@ -46,6 +46,7 @@
   --color-message-other-bg: #ffffff;
   --color-message-other-text: #2d3047;
   --color-message-border: #e1e6ff;
+  --color-message-my-time: #bbddbb;
 
   /* Градиенты для акцентов */
   --gradient-primary: linear-gradient(135deg, #6c63ff, #554fd8);

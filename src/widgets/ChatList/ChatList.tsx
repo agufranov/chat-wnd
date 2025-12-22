@@ -8,6 +8,8 @@ import { useChatStore } from "../../store/chatStore";
 import type { Chat } from "../../shared/types";
 import style from "./ChatList.module.css";
 import cn from "classnames";
+import { formatDistanceToNow, formatDistanceToNowStrict } from "date-fns";
+import { formatTimeAgo } from "../../shared/api/date";
 
 type ChatListProps = {
   selectedChat: Chat | null;
@@ -41,16 +43,21 @@ export const ChatList: React.FC<ChatListProps> = ({
           })}
           onClick={() => onChatSelected(chat)}
         >
-          <div>{chat.name}</div>
-          {chat.lastMessage && (
-            <div className={style.lastMessage}>
-              <span className={style.lastMessageText}>
-                <strong>{chat.lastMessage.author}</strong>:{" "}
-                {chat.lastMessage.text}
-              </span>
-              <span>{chat.lastMessage.timestamp}</span>
-            </div>
-          )}
+          <div className={style.avatar}></div>
+          <div className={style.messagePreview}>
+            <div>{chat.name}</div>
+            {chat.lastMessage && (
+              <div className={style.lastMessage}>
+                <span className={style.lastMessageText}>
+                  <strong>{chat.lastMessage.author}</strong>:{" "}
+                  {chat.lastMessage.text}
+                </span>
+                <span className={style.lastMessageTimestamp}>
+                  {formatTimeAgo(new Date(chat.lastMessage.timestamp))}
+                </span>
+              </div>
+            )}
+          </div>
         </div>
       ))}
     </div>

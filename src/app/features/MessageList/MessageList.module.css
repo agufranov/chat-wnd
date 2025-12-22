@@ -27,9 +27,17 @@
 
 .messageHeader {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
   margin-bottom: 6px;
+  gap: 8px;
+}
+
+.messageAvatar {
+  width: 16px;
+  height: 16px;
+  background-color: green;
+  border-radius: 50%;
 }
 
 .messageAuthor {
@@ -43,8 +51,13 @@
 }
 
 .messageTime {
+  margin-left: auto;
   font-size: 12px;
   color: var(--color-text-tertiary);
+}
+
+.messageMy .messageTime {
+  color: var(--color-message-my-time);
 }
 
 .messageText {

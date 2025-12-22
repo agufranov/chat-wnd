@@ -108,6 +108,7 @@ function MessageRow({ message, index, setRowHeight }: MessageRowProps) {
       className={cn(style.message, { [style.messageMy]: !message.author })}
     >
       <div className={style.messageHeader}>
+        <div className={style.messageAvatar}></div>
         <span className={style.messageAuthor}>{message.author ?? "Вы"}</span>
         <span className={style.messageTime}>
           {new Date(message.timestamp).toLocaleTimeString()}
