@@ -2,6 +2,7 @@ import type { Chat, Message } from "../types";
 import {
   EventBus,
   generateChats,
+  generateFullName,
   generateMessages,
   randomId,
   rnd,
@@ -59,7 +60,7 @@ export const mockApi = {
     const message: Message = {
       id: Math.random().toString(),
       text: "New message",
-      author: "New author",
+      author: generateFullName(),
       chatId: chat.id,
       timestamp: +new Date(),
       status: "sent",
@@ -71,5 +72,5 @@ export const mockApi = {
 };
 
 setInterval(() => {
-  mockApi.addIncomingMessage();
+  // mockApi.addIncomingMessage();
 }, 300);

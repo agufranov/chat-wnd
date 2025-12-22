@@ -4,6 +4,7 @@ import { AutoSizer, List } from "react-virtualized";
 import style from "./MessageList.module.css";
 import type { Message } from "../../../shared/types";
 import cn from "classnames";
+import { generateAvatar } from "../../../shared/api/utils";
 
 interface MessageListProps {
   messages: Message[];
@@ -102,13 +103,20 @@ function MessageRow({ message, index, setRowHeight }: MessageRowProps) {
     }
   }, [index, setRowHeight, message]);
 
+  const avatar = generateAvatar(message.author ?? "");
+
   return (
     <div
       ref={rowRef}
       className={cn(style.message, { [style.messageMy]: !message.author })}
     >
       <div className={style.messageHeader}>
-        <div className={style.messageAvatar}></div>
+        <div
+          className={style.messageAvatar}
+          style={{ background: avatar.color }}
+        >
+          {avatar.text}
+        </div>
         <span className={style.messageAuthor}>{message.author ?? "Вы"}</span>
         <span className={style.messageTime}>
           {new Date(message.timestamp).toLocaleTimeString()}

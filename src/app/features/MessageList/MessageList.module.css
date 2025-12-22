@@ -34,9 +34,14 @@
 }
 
 .messageAvatar {
-  width: 16px;
-  height: 16px;
-  background-color: green;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 11px;
+  font-weight: 500;
+  color: white;
   border-radius: 50%;
 }
 

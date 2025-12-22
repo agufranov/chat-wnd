@@ -12,8 +12,16 @@ export const randomId = () => Math.random().toString(36).substring(2, 10);
 export const sleep = (delay: number) =>
   new Promise((r) => setTimeout(r, delay));
 
+export const generateFullName = () => {
+  const names = "Анна Мария Анастасия Татьяна Евгения Марьям Алина".split(" ");
+  const lastNames = "Кузнецова Смирнова Кругликова Крайнова Любимова".split(
+    " "
+  );
+
+  return `${rndFrom(names)} ${rndFrom(lastNames)}`;
+};
+
 export const generateMessages = (chatId: string, length = 5000): Message[] => {
-  const authors = ["Алиса", "Боб", "Чарли", "Диана"];
   const shortTexts = ["Привет!", "Как дела?", "Ок", "👍"];
   const longTexts = [
     "Это очень длинное сообщение, которое занимает много места и демонстрирует, как виртуализация работает с сообщениями разной высоты. Текст может быть очень длинным и переноситься на несколько строк.",
@@ -22,7 +30,7 @@ export const generateMessages = (chatId: string, length = 5000): Message[] => {
   ];
 
   return range(length).map((i) => {
-    const author = authors[i % authors.length];
+    const author = generateFullName();
     const isLong = rnd(2) === 1;
     const text = isLong
       ? longTexts[i % longTexts.length]
@@ -36,6 +44,7 @@ export const generateMessages = (chatId: string, length = 5000): Message[] => {
         Date.now() - rnd(5) * 86_400_000 - (1000 - i) * 60000
       ),
       chatId,
+      status: "sent",
     };
   });
 };
@@ -45,6 +54,37 @@ export const generateChats = (length = 8): Chat[] => {
     name: `Chat #${i}`,
     id: i.toString(),
   }));
+};
+
+export const generateAvatar = (name: string) => {
+  const colors = [
+    "#FF6B6B",
+    "#4ECDC4",
+    "#45B7D1",
+    "#FFA07A",
+    "#98D8C8",
+    "#F7DC6F",
+    "#BB8FCE",
+    "#85C1E2",
+    "#F8B739",
+    "#52BE80",
+  ];
+
+  let hash = 0;
+  for (let i = 0; i < name.length; i++) {
+    hash = name.charCodeAt(i) + ((hash << 5) - hash);
+  }
+
+  // TODO: по модулю!
+  const index = Math.abs(hash) % colors.length;
+
+  const [firstName, lastName] = name.split(" ");
+
+  const displayName = `${firstName[0].toLocaleUpperCase()}${
+    lastName?.[0].toLocaleUpperCase() ?? ""
+  }`;
+
+  return { color: colors[index], text: displayName };
 };
 
 export class EventBus<T extends { [eventName: string]: unknown }> {

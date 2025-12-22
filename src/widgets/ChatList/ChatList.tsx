@@ -10,6 +10,7 @@ import style from "./ChatList.module.css";
 import cn from "classnames";
 import { formatDistanceToNow, formatDistanceToNowStrict } from "date-fns";
 import { formatTimeAgo } from "../../shared/api/date";
+import { generateAvatar } from "../../shared/api/utils";
 
 type ChatListProps = {
   selectedChat: Chat | null;
@@ -35,31 +36,41 @@ export const ChatList: React.FC<ChatListProps> = ({
 
   return (
     <div className={style.root}>
-      {sortedChats.map((chat) => (
-        <div
-          key={chat.id}
-          className={cn(style.item, {
-            [style.itemSelected]: selectedChat?.id === chat.id,
-          })}
-          onClick={() => onChatSelected(chat)}
-        >
-          <div className={style.avatar}></div>
-          <div className={style.messagePreview}>
-            <div>{chat.name}</div>
-            {chat.lastMessage && (
-              <div className={style.lastMessage}>
-                <span className={style.lastMessageText}>
-                  <strong>{chat.lastMessage.author}</strong>:{" "}
-                  {chat.lastMessage.text}
-                </span>
-                <span className={style.lastMessageTimestamp}>
-                  {formatTimeAgo(new Date(chat.lastMessage.timestamp))}
-                </span>
-              </div>
-            )}
+      {sortedChats.map((chat) => {
+        const avatar = generateAvatar(chat.lastMessage?.author ?? "");
+        return (
+          <div
+            key={chat.id}
+            className={cn(style.item, {
+              [style.itemSelected]: selectedChat?.id === chat.id,
+            })}
+            onClick={() => onChatSelected(chat)}
+          >
+            <div
+              className={style.avatar}
+              style={{
+                backgroundColor: avatar.color,
+              }}
+            >
+              {avatar.text}
+            </div>
+            <div className={style.messagePreview}>
+              <div>{chat.name}</div>
+              {chat.lastMessage && (
+                <div className={style.lastMessage}>
+                  <span className={style.lastMessageText}>
+                    <strong>{chat.lastMessage.author}</strong>:{" "}
+                    {chat.lastMessage.text}
+                  </span>
+                  <span className={style.lastMessageTimestamp}>
+                    {formatTimeAgo(new Date(chat.lastMessage.timestamp))}
+                  </span>
+                </div>
+              )}
+            </div>
           </div>
-        </div>
-      ))}
+        );
+      })}
     </div>
   );
 };
