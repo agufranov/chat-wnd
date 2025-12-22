@@ -23,28 +23,35 @@ const events = new EventBus<{ message: Message }>();
 
 export const mockApi = {
   events,
-  getChats: (): Promise<Chat[]> => Promise.resolve(chats.map(chat => ({...chat}))),
+  getChats: (): Promise<Chat[]> =>
+    Promise.resolve(chats.map((chat) => ({ ...chat }))),
+
   getChatMessages: (chatId: string): Message[] => {
     console.log(chatId);
     chatMessages[chatId] ??= generateMessages(chatId);
 
     return [...chatMessages[chatId]];
   },
-  sendMessage: async (chatId: string, message: Message) => {
-    chatMessages[chatId] ??= [];
-    const createdMessage = {
-      ...message,
+
+  sendMessage: async (chatId: string, text: string) => {
+    const message: Message = {
       id: randomId(),
+      timestamp: +new Date(),
+      text,
+      chatId,
       author: null,
     };
 
+    chatMessages[chatId] ??= [];
+
     chatMessages[chatId] ??= generateMessages(chatId);
 
-    chatMessages[chatId].unshift(createdMessage);
+    chatMessages[chatId].unshift(message);
 
     await sleep(rnd(300) + 150);
-    return createdMessage;
+    return message;
   },
+
   addIncomingMessage: () => {
     const chat = rndFrom(chats);
     const message: Message = {

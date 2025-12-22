@@ -1,7 +1,7 @@
+import { MessageInput } from "@/app/features/MessageInput/MessageInput";
+import { MessageList } from "@/app/features/MessageList/MessageList";
+import { useChatStore } from "../../store/chatStore";
 import { useEffect } from "react";
-import { MessageList } from "../../app/features/MessageList/MessageList";
-import { useChatStore } from "@/store/chatStore";
-import { MessageInput } from "../../app/features/MessageInput/MessageInput";
 import style from "./ChatWindow.module.css";
 
 type ChatWindowProps = {
@@ -9,7 +9,7 @@ type ChatWindowProps = {
 };
 
 export const ChatWindow: React.FC<ChatWindowProps> = ({ chatId }) => {
-  const { messages, loadMessages } = useChatStore();
+  const { messages, loadMessages, sendMessage } = useChatStore();
 
   useEffect(() => {
     if (chatId !== null) loadMessages(chatId);
@@ -20,7 +20,9 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({ chatId }) => {
       {chatId ? (
         <>
           <MessageList messages={messages[chatId] ?? []} />
-          <MessageInput onSubmit={(e) => console.log(e)} />
+          <MessageInput
+            onSubmit={(text: string) => sendMessage(chatId, text)}
+          />
         </>
       ) : (
         <span>Выберите чат</span>

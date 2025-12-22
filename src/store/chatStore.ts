@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import type { Chat, Message } from "../shared/types";
-import { mockApi } from "@/shared/api/mockApi";
+import { mockApi } from "../shared/api/mockApi";
 import { immer } from "zustand/middleware/immer";
 
 type ChatStore = {
@@ -32,6 +32,14 @@ export const useChatStore = create<ChatStore>()(
             if (!chatToUpdate) return;
             chatToUpdate.lastMessage = messages[0];
           }
+        });
+      },
+
+      sendMessage: async (chatId: string, text: string) => {
+        console.log("sending", chatId, text);
+        const sentMessage = await mockApi.sendMessage(chatId, text);
+        set((state) => {
+          state.messages[chatId].push(sentMessage);
         });
       },
 
