@@ -7,6 +7,8 @@ import { formatTimeAgo } from "../../shared/api/date";
 import { generateAvatar, range } from "../../shared/api/utils";
 import { ChatItemSkeleton } from "./ui/ChatItemSkeleton/ChatItemSkeleton";
 
+const CHAT_SKELETONS_COUNT = 12;
+
 type ChatListProps = {
   selectedChat: Chat | null;
   onChatSelected: (chat: Chat) => void;
@@ -32,7 +34,9 @@ export const ChatList: React.FC<ChatListProps> = ({
   return (
     <ul className={style.root}>
       {loadingChats
-        ? range(8).map((_, index) => <ChatItemSkeleton key={index} />)
+        ? range(CHAT_SKELETONS_COUNT).map((_, index) => (
+            <ChatItemSkeleton key={index} />
+          ))
         : sortedChats.map((chat) => {
             const avatar = generateAvatar(chat.lastMessage?.author ?? "");
             return (

@@ -1,3 +1,4 @@
+import { INCOMING_MESSAGE_INTERVAL } from "@/constants";
 import type { Chat, Message } from "../types";
 import {
   EventBus,
@@ -5,6 +6,7 @@ import {
   generateFullName,
   generateMessages,
   randomId,
+  randomMessage,
   rnd,
   rndFrom,
   sleep,
@@ -65,14 +67,7 @@ export const mockApi = {
 
   addIncomingMessage: () => {
     const chat = rndFrom(chats);
-    const message: Message = {
-      id: Math.random().toString(),
-      text: "New message",
-      author: generateFullName(),
-      chatId: chat.id,
-      timestamp: +new Date(),
-      status: "sent",
-    };
+    const message: Message = randomMessage(chat.id);
     chatMessages[chat.id].unshift(message);
     chat.lastMessage = message;
     events.emit("message", message);
@@ -80,5 +75,5 @@ export const mockApi = {
 };
 
 setInterval(() => {
-  // mockApi.addIncomingMessage();
-}, 300);
+  mockApi.addIncomingMessage();
+}, INCOMING_MESSAGE_INTERVAL);

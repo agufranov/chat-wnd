@@ -10,6 +10,8 @@ function App() {
 
   const [selectedChat, setSelectedChat] = useState<Chat | null>(null);
 
+  useEffect(() => subscribe(), []);
+
   return (
     <main className={style.main}>
       <aside className={style.sidebar}>
