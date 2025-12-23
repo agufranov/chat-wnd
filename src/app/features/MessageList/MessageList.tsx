@@ -1,130 +1,64 @@
-import { useCallback, useEffect, useMemo, useRef } from "react";
-import type { ListRowProps } from "react-virtualized";
-import { AutoSizer, List } from "react-virtualized";
+import { useEffect, useRef } from "react";
+import { Virtuoso, type VirtuosoHandle } from "react-virtuoso";
 import style from "./MessageList.module.css";
 import type { Message } from "../../../shared/types";
 import cn from "classnames";
 import { generateAvatar } from "../../../shared/api/utils";
 
-interface MessageListProps {
+type MessageListProps = {
   messages: Message[];
-}
+};
 
-const DEFAULT_MSG_HEIGHT = 80;
-const MSG_MARGIN = 12;
+export const MessageList: React.FC<MessageListProps> = ({ messages }) => {
+  const virtuosoRef = useRef<VirtuosoHandle>(null);
 
-export const MessageList: React.FC<MessageListProps> = ({
-  messages,
-}: MessageListProps) => {
-  const containerRef = useRef<HTMLElement>(null);
-  const listRef = useRef<List>(null);
-  const itemHeights = useRef<Map<number, number>>(new Map());
-
-  // const reversedMessages = useMemo(() => [...messages].reverse(), [messages]);
-  const reversedMessages = messages;
-
-  const getRowHeight = useCallback(({ index }: { index: number }) => {
-    return itemHeights.current.get(index) || DEFAULT_MSG_HEIGHT;
-  }, []);
-
-  const setRowHeight = useCallback((index: number, height: number) => {
-    if (itemHeights.current.get(index) !== height) {
-      itemHeights.current.set(index, height + MSG_MARGIN);
-      listRef.current?.recomputeRowHeights(index);
-    }
-  }, []);
-
-  const rowRenderer = useCallback(
-    ({ index, key, style }: ListRowProps) => {
-      const message = reversedMessages[index];
-
-      return (
-        <div
-          key={key}
-          className={style.gridcell}
-          style={{
-            ...style,
-          }}
-        >
-          <MessageRow
-            message={message}
-            index={index}
-            setRowHeight={setRowHeight}
-          />
-        </div>
-      );
-    },
-    [reversedMessages, setRowHeight]
-  );
-
-  // Прокручиваем вниз при добавлении новых сообщений
   useEffect(() => {
-    if (listRef.current && reversedMessages.length > 0) {
+    if (virtuosoRef.current && messages.length > 0) {
       setTimeout(() => {
-        listRef.current?.scrollToRow(reversedMessages.length - 1);
+        virtuosoRef.current?.scrollToIndex({
+          index: messages.length - 1,
+          align: "end",
+          behavior: "auto",
+        });
       }, 0);
     }
-  }, [reversedMessages.length]);
+  }, [messages.length]);
 
   return (
-    <div className={style.chatContainer} ref={containerRef}>
-      <AutoSizer>
-        {({ height, width }: { height: number; width: number }) => (
-          <List
-            ref={listRef}
-            height={height}
-            width={width}
-            rowCount={reversedMessages.length}
-            rowHeight={getRowHeight}
-            rowRenderer={rowRenderer}
-            overscanRowCount={5}
-            scrollToIndex={reversedMessages.length - 1}
-          />
+    <div className={style.chatContainer}>
+      <Virtuoso
+        ref={virtuosoRef}
+        data={messages}
+        itemContent={(index, message) => (
+          <div className={style.gridcell}>
+            <div
+              className={cn(style.message, { [style.messageMy]: message.isMy })}
+            >
+              <div className={style.messageHeader}>
+                <div
+                  className={style.messageAvatar}
+                  style={{
+                    background: generateAvatar(message.author ?? "").color,
+                  }}
+                >
+                  {generateAvatar(message.author ?? "").text}
+                </div>
+                <span className={style.messageAuthor}>
+                  {message.author ?? "Вы"}
+                </span>
+                <span className={style.messageTime}>
+                  {new Date(message.timestamp).toLocaleTimeString()}
+                </span>
+              </div>
+              <div className={style.messageText}>
+                {message.status === "pending" ? "......" : message.text}
+              </div>
+            </div>
+          </div>
         )}
-      </AutoSizer>
+        overscan={200}
+        style={{ height: "100%" }}
+      />
     </div>
   );
 };
-
-interface MessageRowProps {
-  message: Message;
-  index: number;
-  setRowHeight: (index: number, height: number) => void;
-}
-
-// Компонент для измерения высоты
-function MessageRow({ message, index, setRowHeight }: MessageRowProps) {
-  const rowRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (rowRef.current) {
-      const height = rowRef.current.getBoundingClientRect().height;
-      setRowHeight(index, height);
-    }
-  }, [index, setRowHeight, message]);
-
-  const avatar = generateAvatar(message.author ?? "");
-
-  return (
-    <div
-      ref={rowRef}
-      className={cn(style.message, { [style.messageMy]: message.isMy })}
-    >
-      <div className={style.messageHeader}>
-        <div
-          className={style.messageAvatar}
-          style={{ background: avatar.color }}
-        >
-          {avatar.text}
-        </div>
-        <span className={style.messageAuthor}>{message.author ?? "Вы"}</span>
-        <span className={style.messageTime}>
-          {new Date(message.timestamp).toLocaleTimeString()}
-        </span>
-      </div>
-      <div className={style.messageText}>
-        {message.status === "pending" ? "......" : message.text}
-      </div>
-    </div>
-  );
-}
