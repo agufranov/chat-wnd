@@ -15,6 +15,7 @@ type ChatStore = {
   ) => void;
   loadChats: () => Promise<void>;
   loadMessages: (chatId: string) => Promise<void>;
+  sendMessage: (chatId: string, text: string) => void;
   subscribe: () => void;
 };
 

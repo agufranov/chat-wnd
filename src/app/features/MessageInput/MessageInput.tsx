@@ -1,4 +1,11 @@
-import { useEffect, useRef, useState, type FormEvent } from "react";
+import {
+  useEffect,
+  useRef,
+  useState,
+  type FormEvent,
+  type FormEventHandler,
+  type KeyboardEventHandler,
+} from "react";
 import type React from "react";
 import style from "./MessageInput.module.css";
 import Send from "./assets/send.svg?react";
@@ -16,9 +23,11 @@ export const MessageInput: React.FC<MessageInputProps> = ({ onSubmit }) => {
     inputRef.current?.focus();
   }, []);
 
-  const handleSubmit = (e: FormEvent) => {
-    e.preventDefault();
+  const handleSubmit = (e?: FormEvent) => {
+    e?.preventDefault();
+    if (!inputState.trim()) return;
     setInputState("");
+    adjustHeight();
     onSubmit(inputState.trim());
   };
 
@@ -30,9 +39,16 @@ export const MessageInput: React.FC<MessageInputProps> = ({ onSubmit }) => {
     textarea.style.height = `${textarea.scrollHeight + 1}px`;
   };
 
-  const handleInput = (e: FormEvent<HTMLTextAreaElement>) => {
-    setInputState((e.currentTarget as HTMLTextAreaElement).value);
+  const handleInput: FormEventHandler<HTMLTextAreaElement> = (e) => {
+    setInputState(e.currentTarget.value);
     adjustHeight();
+  };
+
+  const handleKeyDown: KeyboardEventHandler = (e) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      handleSubmit();
+    }
   };
 
   return (
@@ -46,9 +62,14 @@ export const MessageInput: React.FC<MessageInputProps> = ({ onSubmit }) => {
         value={inputState}
         placeholder="Введите сообщение..."
         onInput={handleInput}
+        onKeyDown={handleKeyDown}
         ref={inputRef}
       />
-      <button className={style.sendButton} type="submit" disabled={!inputState}>
+      <button
+        className={style.sendButton}
+        type="submit"
+        disabled={!inputState.trim()}
+      >
         <Send width={24} height={24} />
       </button>
     </form>
