@@ -15,6 +15,8 @@ import { generateAvatar } from "../../../shared/api/utils";
 import { useUnreadCount } from "./hooks/useUnreadCount";
 import { ScrollDownButton } from "./ui/ScrollDownButton/ScrollDownButton";
 import { useDebounce } from "../../../shared/hooks/useDebounce";
+import { Spinner } from "../../../shared/ui/Spinner/Spinner";
+import { useChatStore } from "../../../store/chatStore";
 
 type MessageListMethods = {
   scrollToBottom: () => void;
@@ -31,6 +33,7 @@ export const MessageList = forwardRef<MessageListMethods, MessageListProps>(
     const [atBottom, setAtBottom] = useState(true);
     const atBottomDebounced = useDebounce(atBottom, 300);
     const [initiallyScrolled, setInitiallyScrolled] = useState(false);
+    const { pendingMessages } = useChatStore();
 
     const unreadCount = useUnreadCount(atBottom, messages.length);
 
@@ -86,6 +89,11 @@ export const MessageList = forwardRef<MessageListMethods, MessageListProps>(
                     }}
                   >
                     {generateAvatar(message.author ?? "").text}
+                    {pendingMessages[message.id] && (
+                      <div className={style.spinner}>
+                        <Spinner size={24} />
+                      </div>
+                    )}
                   </div>
                   <span className={style.messageAuthor}>
                     {message.author ?? "Вы"}
@@ -94,9 +102,7 @@ export const MessageList = forwardRef<MessageListMethods, MessageListProps>(
                     {new Date(message.timestamp).toLocaleTimeString()}
                   </span>
                 </div>
-                <div className={style.messageText}>
-                  {message.status === "pending" ? "......" : message.text}
-                </div>
+                <div className={style.messageText}>{message.text}</div>
               </div>
             </div>
           )}

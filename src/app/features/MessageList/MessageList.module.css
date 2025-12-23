@@ -59,6 +59,7 @@
   font-weight: 500;
   color: white;
   border-radius: 50%;
+  position: relative;
 }
 
 .messageAuthor {
@@ -86,4 +87,9 @@
   line-height: 1.5;
   word-wrap: break-word;
   white-space: pre-wrap;
+}
+
+.spinner {
+  position: absolute;
+  inset: 0;
 }

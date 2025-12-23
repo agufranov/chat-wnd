@@ -13,7 +13,7 @@ export const ScrollDownButton: React.FC<ScrollDownButtonProps> = ({
   return (
     <button {...rest} className={`${style.root} ${rest.className}`}>
       {unreadCount !== 0 && <div className={style.badge}>{unreadCount}</div>}
-      <Chevron />
+      <Chevron className={style.icon} />
     </button>
   );
 };

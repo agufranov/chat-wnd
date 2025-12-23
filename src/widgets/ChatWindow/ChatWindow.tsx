@@ -3,14 +3,18 @@ import { MessageList } from "@/app/features/MessageList/MessageList";
 import { useChatStore } from "../../store/chatStore";
 import { useEffect, useRef } from "react";
 import style from "./ChatWindow.module.css";
+import { Spinner } from "../../shared/ui/Spinner/Spinner";
 
 type ChatWindowProps = {
   chatId: string | null;
 };
 
 export const ChatWindow: React.FC<ChatWindowProps> = ({ chatId }) => {
-  const { messages, loadMessages, sendMessage } = useChatStore();
+  const { messages, loadMessages, sendMessage, loadingMessages } =
+    useChatStore();
   const messageListRef = useRef<typeof MessageList>(null);
+
+  useEffect(() => console.log("Loading", loadingMessages), [loadingMessages]);
 
   useEffect(() => {
     if (chatId !== null) loadMessages(chatId);
@@ -24,7 +28,9 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({ chatId }) => {
 
   return (
     <div className={style.container}>
-      {chatId ? (
+      {loadingMessages ? (
+        <Spinner size={256} thin />
+      ) : chatId ? (
         <>
           <MessageList messages={messages[chatId] ?? []} ref={messageListRef} />
           <MessageInput onSubmit={handleSubmit} />

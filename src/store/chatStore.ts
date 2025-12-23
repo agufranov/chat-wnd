@@ -8,6 +8,9 @@ import type { WritableDraft } from "immer";
 type ChatStore = {
   chats: Chat[];
   messages: { [chatId: string]: Message[] };
+  pendingMessages: {[messageId: string]: boolean}
+  loadingChats: boolean;
+  loadingMessages: boolean;
   setLastMessage: (
     state: WritableDraft<ChatStore>,
     chatId: string,
@@ -26,6 +29,12 @@ export const useChatStore = create<ChatStore>()(
 
       messages: {},
 
+      pendingMessages: {},
+
+      loadingChats: false,
+
+      loadingMessages: false,
+
       setLastMessage: (
         state: WritableDraft<ChatStore>,
         chatId: string,
@@ -38,14 +47,17 @@ export const useChatStore = create<ChatStore>()(
       },
 
       loadChats: async () => {
-        set({ chats: await mockApi.getChats() });
+        set({ loadingChats: true });
+        set({ chats: await mockApi.getChats(), loadingMessages: false });
       },
 
       loadMessages: async (chatId: string) => {
+        set({ loadingMessages: true });
         const messages = await mockApi.getChatMessages(chatId);
         set((state) => {
           state.messages[chatId] = messages;
           state.setLastMessage(state, chatId, messages[messages.length - 1]);
+          state.loadingMessages = false;
         });
       },
 
@@ -63,6 +75,7 @@ export const useChatStore = create<ChatStore>()(
             status: "pending" as const,
           };
           state.messages[chatId].push(tmpMessage);
+          state.pendingMessages[tmpId] = true
           state.setLastMessage(state, chatId, tmpMessage);
         });
 
@@ -73,6 +86,7 @@ export const useChatStore = create<ChatStore>()(
             sentMessage,
           ];
           state.setLastMessage(state, chatId, sentMessage);
+          state.pendingMessages[tmpId] = false
         });
       },
 

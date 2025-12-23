@@ -10,6 +10,10 @@ import {
   sleep,
 } from "./utils";
 
+const AVG_DELAY = 1000;
+
+const debugSleep = () => sleep(AVG_DELAY + rnd(AVG_DELAY) - AVG_DELAY / 2);
+
 const chats = generateChats();
 
 type MessageCache = { [chatId: string]: Message[] };
@@ -25,12 +29,12 @@ const events = new EventBus<{ message: Message }>();
 export const mockApi = {
   events,
   getChats: async (): Promise<Chat[]> => {
-    await sleep(rnd(300) + 150);
+    // await debugSleep();
     return Promise.resolve(chats.map((chat) => ({ ...chat })));
   },
 
   getChatMessages: async (chatId: string): Promise<Message[]> => {
-    await sleep(rnd(300) + 150);
+    await debugSleep();
     console.log(chatId);
     chatMessages[chatId] ??= generateMessages(chatId);
 
@@ -38,7 +42,7 @@ export const mockApi = {
   },
 
   sendMessage: async (chatId: string, text: string) => {
-    await sleep(rnd(300) + 150); // искусственная задержка
+    await debugSleep(); // искусственная задержка
 
     const message: Message = {
       id: randomId(),

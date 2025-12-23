@@ -30,3 +30,8 @@
   top: 0;
   transform: translateY(-50%);
 }
+
+.icon {
+  width: 100%;
+  height: 100%;
+}
