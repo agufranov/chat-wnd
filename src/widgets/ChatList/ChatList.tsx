@@ -1,21 +1,14 @@
-import React, {
-  useEffect,
-  useMemo,
-  type ReactElement,
-  type ReactNode,
-} from "react";
+import React, { useEffect, useMemo } from "react";
 import { useChatStore } from "../../store/chatStore";
 import type { Chat } from "../../shared/types";
 import style from "./ChatList.module.css";
 import cn from "classnames";
-import { formatDistanceToNow, formatDistanceToNowStrict } from "date-fns";
 import { formatTimeAgo } from "../../shared/api/date";
 import { generateAvatar, range } from "../../shared/api/utils";
 import { ChatItemSkeleton } from "./ui/ChatItemSkeleton/ChatItemSkeleton";
 
 type ChatListProps = {
   selectedChat: Chat | null;
-  loadingChats: boolean;
   onChatSelected: (chat: Chat) => void;
 };
 

@@ -1,5 +1,5 @@
 // src/components/MessageInput/MessageInput.test.tsx
-import { render, screen, fireEvent } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { MessageInput } from "./MessageInput";
 import { useState } from "react";
@@ -15,9 +15,7 @@ describe("MessageInput", () => {
     render(<MessageInput onSubmit={mockonSubmit} />);
 
     expect(screen.getByRole("textbox")).toBeInTheDocument();
-    expect(
-      screen.getByRole("button")
-    ).toBeInTheDocument();
+    expect(screen.getByRole("button")).toBeInTheDocument();
   });
 
   it("рендерит placeholder", () => {
@@ -31,9 +29,7 @@ describe("MessageInput", () => {
   it("кнопка имеет правильный текст", () => {
     render(<MessageInput onSubmit={mockonSubmit} />);
 
-    expect(
-      screen.getByRole("button")
-    ).toBeInTheDocument();
+    expect(screen.getByRole("button")).toBeInTheDocument();
   });
 
   it("кнопка отправки заблокирована при пустом input", () => {

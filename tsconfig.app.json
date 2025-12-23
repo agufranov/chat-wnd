@@ -12,7 +12,7 @@
       "@/*": ["src/*"]
     },
     "jsx": "react-jsx",
-    "esModuleInterop": true
+    "esModuleInterop": true,
 
     /* Bundler mode */
     "moduleResolution": "bundler",
@@ -30,5 +30,5 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true
   },
-  "include": ["src"],
+  "include": ["src"]
 }

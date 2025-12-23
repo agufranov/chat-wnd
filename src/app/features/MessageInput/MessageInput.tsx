@@ -10,7 +10,6 @@ import type React from "react";
 import style from "./MessageInput.module.css";
 import Send from "./assets/send.svg";
 import cn from "classnames";
-import { Spinner } from "../../../shared/ui/Spinner/Spinner";
 
 type MessageInputProps = {
   onSubmit: (message: string) => void;

@@ -3,7 +3,6 @@ import {
   useCallback,
   useEffect,
   useImperativeHandle,
-  useMemo,
   useRef,
   useState,
 } from "react";
@@ -74,7 +73,7 @@ export const MessageList = forwardRef<MessageListMethods, MessageListProps>(
           atBottomStateChange={setAtBottom}
           ref={virtuosoRef}
           data={messages}
-          itemContent={(index, message) => (
+          itemContent={(_, message) => (
             <div className={style.messageWrapper}>
               <div
                 className={cn(style.message, {

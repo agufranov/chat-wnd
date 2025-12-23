@@ -1,4 +1,3 @@
-import { useMemo } from "react";
 import type { Chat, Message } from "../types";
 
 export const range = (n: number) => [...Array(n).keys()];
