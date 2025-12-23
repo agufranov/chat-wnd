@@ -18,7 +18,7 @@ import { useDebounce } from "../../../shared/hooks/useDebounce";
 import { Spinner } from "../../../shared/ui/Spinner/Spinner";
 import { useChatStore } from "../../../store/chatStore";
 
-type MessageListMethods = {
+export type MessageListMethods = {
   scrollToBottom: () => void;
 };
 

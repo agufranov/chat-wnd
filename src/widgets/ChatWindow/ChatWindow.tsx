@@ -1,5 +1,8 @@
 import { MessageInput } from "@/app/features/MessageInput/MessageInput";
-import { MessageList } from "@/app/features/MessageList/MessageList";
+import {
+  MessageList,
+  type MessageListMethods,
+} from "@/app/features/MessageList/MessageList";
 import { useChatStore } from "../../store/chatStore";
 import { useEffect, useRef } from "react";
 import style from "./ChatWindow.module.css";
@@ -12,7 +15,7 @@ type ChatWindowProps = {
 export const ChatWindow: React.FC<ChatWindowProps> = ({ chatId }) => {
   const { messages, loadMessages, sendMessage, loadingMessages } =
     useChatStore();
-  const messageListRef = useRef<typeof MessageList>(null);
+  const messageListRef = useRef<MessageListMethods>(null);
 
   useEffect(() => console.log("Loading", loadingMessages), [loadingMessages]);
 
@@ -23,7 +26,7 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({ chatId }) => {
   const handleSubmit = (text: string) => {
     if (!chatId) return;
     sendMessage(chatId, text);
-    messageListRef.current.scrollToBottom();
+    messageListRef.current?.scrollToBottom();
   };
 
   return (
