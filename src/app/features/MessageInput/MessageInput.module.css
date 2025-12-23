@@ -1,6 +1,6 @@
 .root {
   padding: 16px;
-  height: 64px;
+  /* height: 64px; */
   display: flex;
   align-items: stretch;
   width: 100%;
@@ -8,4 +8,184 @@
 
 .input {
   flex: 1;
+}
+
+/* Контейнер */
+.messageInputContainer {
+  display: flex;
+  gap: 12px;
+  width: 100%;
+  padding: 16px 20px;
+  border-top: 1px solid #f0f0f0;
+  box-shadow: 0 -2px 20px rgba(0, 0, 0, 0.03);
+}
+
+/* Поле ввода */
+.messageInput {
+  flex: 1;
+  padding: 14px 20px;
+  font-size: 15px;
+  line-height: 1.4;
+  color: #1a1a1a;
+  background: #f8f9fa;
+  border: 2px solid var(--color-border-light);
+  border-radius: 24px;
+  outline: none;
+  transition: all 0.2s ease;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  resize: none;
+  min-height: 48px;
+  max-height: 120px;
+  height: 53px;
+}
+
+.messageInput::placeholder {
+  color: #8a94a6;
+}
+
+.messageInput:hover {
+  background: #f1f3f5;
+  border-color: var(--color-bg-tertiary);
+}
+
+.messageInput:focus {
+  background: #ffffff;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(77, 171, 247, 0.1);
+}
+
+/* Кнопка отправки */
+.sendButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  color: var(--color-primary);
+  background: var(--color-bg-secondary);
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(51, 154, 240, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+.sendButton::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, red 0%, #228be6 100%);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  z-index: 1;
+}
+
+.sendButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(51, 154, 240, 0.3);
+}
+
+.sendButton:hover::before {
+  opacity: 0.3;
+}
+
+.sendButton:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(51, 154, 240, 0.3);
+}
+
+.sendButton:disabled {
+  color: var(--color-bg-primary);
+  background: var(--color-bg-tertiary);
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.sendButton:disabled::before {
+  opacity: 0;
+}
+
+.sendButton:disabled:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+/* Внутренняя обертка для иконки */
+.sendButtonInner {
+  position: relative;
+  z-index: 1;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  transition: transform 0.2s ease;
+}
+
+.sendButton:hover .sendButtonInner {
+  transform: scale(1.1);
+}
+
+.sendButton:active .sendButtonInner {
+  transform: scale(0.95);
+}
+
+/* Анимация загрузки (опционально) */
+.sendButton.loading {
+  pointer-events: none;
+}
+
+.sendButton.loading .sendButtonInner {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Минималистичная версия */
+.messageInput.minimal {
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  padding: 16px 0;
+  box-shadow: none;
+}
+
+.messageInput.minimal:focus {
+  box-shadow: none;
+  border-bottom: 2px solid #4dabf7;
+}
+
+.sendButton.minimal {
+  width: 48px;
+  height: 48px;
+  background: #f8f9fa;
+  border: 2px solid #e9ecef;
+  box-shadow: none;
+}
+
+.sendButton.minimal .sendButtonInner {
+  color: #8a94a6;
+}
+
+.sendButton.minimal:hover {
+  background: #4dabf7;
+  border-color: #4dabf7;
+}
+
+.sendButton.minimal:hover .sendButtonInner {
+  color: white;
 }
