@@ -1,6 +1,6 @@
 import type React from "react";
 import style from "./ScrollDownButton.module.css";
-import Chevron from "./assets/chevron.svg?react";
+import Chevron from "./assets/chevron.svg";
 
 type ScrollDownButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   unreadCount: number;

@@ -8,7 +8,7 @@ import {
 } from "react";
 import type React from "react";
 import style from "./MessageInput.module.css";
-import Send from "./assets/send.svg?react";
+import Send from "./assets/send.svg";
 import cn from "classnames";
 
 type MessageInputProps = {
