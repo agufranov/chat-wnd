@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Virtuoso, type VirtuosoHandle } from "react-virtuoso";
 import style from "./MessageList.module.css";
 import type { Message } from "../../../shared/types";
@@ -12,14 +12,18 @@ type MessageListProps = {
 export const MessageList: React.FC<MessageListProps> = ({ messages }) => {
   const virtuosoRef = useRef<VirtuosoHandle>(null);
 
+  const [atBottom, setAtBottom] = useState(true);
+  const [initiallyScrolled, setInitiallyScrolled] = useState(false);
+
   useEffect(() => {
-    if (virtuosoRef.current && messages.length > 0) {
+    if (virtuosoRef.current && messages.length > 0 && atBottom) {
       setTimeout(() => {
         virtuosoRef.current?.scrollToIndex({
           index: messages.length - 1,
           align: "end",
-          behavior: "auto",
+          behavior: initiallyScrolled ? "smooth" : "auto",
         });
+        setInitiallyScrolled(true);
       }, 0);
     }
   }, [messages.length]);
@@ -27,6 +31,7 @@ export const MessageList: React.FC<MessageListProps> = ({ messages }) => {
   return (
     <div className={style.chatContainer}>
       <Virtuoso
+        atBottomStateChange={setAtBottom}
         ref={virtuosoRef}
         data={messages}
         itemContent={(index, message) => (
