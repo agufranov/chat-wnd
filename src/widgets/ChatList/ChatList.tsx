@@ -10,10 +10,12 @@ import style from "./ChatList.module.css";
 import cn from "classnames";
 import { formatDistanceToNow, formatDistanceToNowStrict } from "date-fns";
 import { formatTimeAgo } from "../../shared/api/date";
-import { generateAvatar } from "../../shared/api/utils";
+import { generateAvatar, range } from "../../shared/api/utils";
+import { ChatItemSkeleton } from "./ui/ChatItemSkeleton/ChatItemSkeleton";
 
 type ChatListProps = {
   selectedChat: Chat | null;
+  loadingChats: boolean;
   onChatSelected: (chat: Chat) => void;
 };
 
@@ -21,7 +23,7 @@ export const ChatList: React.FC<ChatListProps> = ({
   selectedChat,
   onChatSelected,
 }) => {
-  const { chats, loadChats } = useChatStore();
+  const { chats, loadChats, loadingChats } = useChatStore();
 
   useEffect(() => {
     loadChats();
@@ -36,43 +38,45 @@ export const ChatList: React.FC<ChatListProps> = ({
 
   return (
     <ul className={style.root}>
-      {sortedChats.map((chat) => {
-        const avatar = generateAvatar(chat.lastMessage?.author ?? "");
-        return (
-          <li
-            key={chat.id}
-            className={cn(style.item, {
-              [style.itemSelected]: selectedChat?.id === chat.id,
-            })}
-            onClick={() => onChatSelected(chat)}
-          >
-            <div
-              className={style.avatar}
-              style={{
-                backgroundColor: avatar.color,
-              }}
-            >
-              {avatar.text}
-            </div>
-            <div className={style.messagePreview}>
-              <div>{chat.name}</div>
-              {chat.lastMessage && (
-                <div className={style.lastMessage}>
-                  <span className={style.lastMessageText}>
-                    <span className={style.lastMessageAuthor}>
-                      {chat.lastMessage.author?.split(" ")[0]}
-                    </span>
-                    : {chat.lastMessage.text}
-                  </span>
-                  <span className={style.lastMessageTimestamp}>
-                    {formatTimeAgo(new Date(chat.lastMessage.timestamp))}
-                  </span>
+      {loadingChats
+        ? range(8).map((_) => <ChatItemSkeleton />)
+        : sortedChats.map((chat) => {
+            const avatar = generateAvatar(chat.lastMessage?.author ?? "");
+            return (
+              <li
+                key={chat.id}
+                className={cn(style.item, {
+                  [style.itemSelected]: selectedChat?.id === chat.id,
+                })}
+                onClick={() => onChatSelected(chat)}
+              >
+                <div
+                  className={style.avatar}
+                  style={{
+                    backgroundColor: avatar.color,
+                  }}
+                >
+                  {avatar.text}
                 </div>
-              )}
-            </div>
-          </li>
-        );
-      })}
+                <div className={style.messagePreview}>
+                  <div>{chat.name}</div>
+                  {chat.lastMessage && (
+                    <div className={style.lastMessage}>
+                      <span className={style.lastMessageText}>
+                        <span className={style.lastMessageAuthor}>
+                          {chat.lastMessage.author?.split(" ")[0]}
+                        </span>
+                        : {chat.lastMessage.text}
+                      </span>
+                      <span className={style.lastMessageTimestamp}>
+                        {formatTimeAgo(new Date(chat.lastMessage.timestamp))}
+                      </span>
+                    </div>
+                  )}
+                </div>
+              </li>
+            );
+          })}
     </ul>
   );
 };

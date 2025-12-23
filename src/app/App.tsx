@@ -6,7 +6,7 @@ import type { Chat } from "../shared/types";
 import { useChatStore } from "../store/chatStore";
 
 function App() {
-  const { loadMessages, subscribe } = useChatStore();
+  const { loadMessages, subscribe, loadingChats } = useChatStore();
 
   const [selectedChat, setSelectedChat] = useState<Chat | null>(null);
 

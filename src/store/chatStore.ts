@@ -8,7 +8,7 @@ import type { WritableDraft } from "immer";
 type ChatStore = {
   chats: Chat[];
   messages: { [chatId: string]: Message[] };
-  pendingMessages: {[messageId: string]: boolean}
+  pendingMessages: { [messageId: string]: boolean };
   loadingChats: boolean;
   loadingMessages: boolean;
   setLastMessage: (
@@ -48,7 +48,7 @@ export const useChatStore = create<ChatStore>()(
 
       loadChats: async () => {
         set({ loadingChats: true });
-        set({ chats: await mockApi.getChats(), loadingMessages: false });
+        set({ chats: await mockApi.getChats(), loadingChats: false });
       },
 
       loadMessages: async (chatId: string) => {
@@ -75,7 +75,7 @@ export const useChatStore = create<ChatStore>()(
             status: "pending" as const,
           };
           state.messages[chatId].push(tmpMessage);
-          state.pendingMessages[tmpId] = true
+          state.pendingMessages[tmpId] = true;
           state.setLastMessage(state, chatId, tmpMessage);
         });
 
@@ -86,7 +86,7 @@ export const useChatStore = create<ChatStore>()(
             sentMessage,
           ];
           state.setLastMessage(state, chatId, sentMessage);
-          state.pendingMessages[tmpId] = false
+          state.pendingMessages[tmpId] = false;
         });
       },
 

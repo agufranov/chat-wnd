@@ -1,0 +1,72 @@
+.root {
+  height: 59px;
+  display: flex;
+  align-items: center;
+  padding: 8px;
+  gap: 8px;
+}
+
+.avatar {
+  width: 36px;
+  height: 36px;
+  background: gray;
+  border-radius: 50%;
+}
+
+.text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+}
+
+.chatName,
+.lastMessage,
+.avatar {
+  background: linear-gradient(
+    90deg,
+    #f0f0f0 25%,
+    /* светлый серый */ #e0e0e0 50%,
+    /* средний серый */ #f0f0f0 75% /* светлый серый */
+  );
+  background-size: 200px 100%;
+  animation: shimmer 1.5s infinite linear;
+}
+
+.chatName,
+.lastMessage {
+  border: 3px solid transparent;
+  box-sizing: border-box;
+  border-radius: 9999px;
+}
+
+.chatName {
+  width: 100%;
+  height: 22px;
+  background-color: gray;
+}
+
+.lastMessage {
+  width: 100%;
+  height: 16px;
+  background-color: gray;
+}
+
+/* Ключевые кадры */
+@keyframes shimmer {
+  0% {
+    background-position: -200px 0;
+  }
+  100% {
+    background-position: calc(200px + 100%) 0;
+  }
+}
+
+@keyframes skeleton-loading {
+  0% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0 50%;
+  }
+}

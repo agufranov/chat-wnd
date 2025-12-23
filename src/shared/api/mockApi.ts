@@ -29,7 +29,7 @@ const events = new EventBus<{ message: Message }>();
 export const mockApi = {
   events,
   getChats: async (): Promise<Chat[]> => {
-    // await debugSleep();
+    await debugSleep();
     return Promise.resolve(chats.map((chat) => ({ ...chat })));
   },
 
@@ -80,5 +80,5 @@ export const mockApi = {
 };
 
 setInterval(() => {
-  mockApi.addIncomingMessage();
+  // mockApi.addIncomingMessage();
 }, 300);

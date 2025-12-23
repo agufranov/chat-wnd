@@ -29,7 +29,7 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({ chatId }) => {
   return (
     <div className={style.container}>
       {loadingMessages ? (
-        <Spinner size={256} thin />
+        <Spinner size={128} thin />
       ) : chatId ? (
         <>
           <MessageList messages={messages[chatId] ?? []} ref={messageListRef} />
