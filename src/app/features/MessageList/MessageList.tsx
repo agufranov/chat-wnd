@@ -108,7 +108,7 @@ function MessageRow({ message, index, setRowHeight }: MessageRowProps) {
   return (
     <div
       ref={rowRef}
-      className={cn(style.message, { [style.messageMy]: !message.author })}
+      className={cn(style.message, { [style.messageMy]: message.isMy })}
     >
       <div className={style.messageHeader}>
         <div

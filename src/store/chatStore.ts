@@ -44,7 +44,8 @@ export const useChatStore = create<ChatStore>()(
             id: tmpId,
             chatId,
             text,
-            author: null,
+            author: "Вы",
+            isMy: true,
             timestamp: +new Date(),
             status: "pending",
           });

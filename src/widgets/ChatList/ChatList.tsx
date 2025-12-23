@@ -35,11 +35,11 @@ export const ChatList: React.FC<ChatListProps> = ({
   }, [chats]);
 
   return (
-    <div className={style.root}>
+    <ul className={style.root}>
       {sortedChats.map((chat) => {
         const avatar = generateAvatar(chat.lastMessage?.author ?? "");
         return (
-          <div
+          <li
             key={chat.id}
             className={cn(style.item, {
               [style.itemSelected]: selectedChat?.id === chat.id,
@@ -59,8 +59,10 @@ export const ChatList: React.FC<ChatListProps> = ({
               {chat.lastMessage && (
                 <div className={style.lastMessage}>
                   <span className={style.lastMessageText}>
-                    <strong>{chat.lastMessage.author}</strong>:{" "}
-                    {chat.lastMessage.text}
+                    <span className={style.lastMessageAuthor}>
+                      {chat.lastMessage.author?.split(" ")[0]}
+                    </span>
+                    : {chat.lastMessage.text}
                   </span>
                   <span className={style.lastMessageTimestamp}>
                     {formatTimeAgo(new Date(chat.lastMessage.timestamp))}
@@ -68,9 +70,9 @@ export const ChatList: React.FC<ChatListProps> = ({
                 </div>
               )}
             </div>
-          </div>
+          </li>
         );
       })}
-    </div>
+    </ul>
   );
 };

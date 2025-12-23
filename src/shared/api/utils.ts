@@ -14,7 +14,7 @@ export const sleep = (delay: number) =>
 
 export const generateFullName = () => {
   const names = "Анна Мария Анастасия Татьяна Евгения Марьям Алина".split(" ");
-  const lastNames = "Кузнецова Смирнова Кругликова Крайнова Любимова".split(
+  const lastNames = "Кузнецова Смирнова Кругликова Султанова Максимова Любимова".split(
     " "
   );
 
