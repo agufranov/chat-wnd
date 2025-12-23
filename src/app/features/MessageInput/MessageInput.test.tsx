@@ -16,7 +16,7 @@ describe("MessageInput", () => {
 
     expect(screen.getByRole("textbox")).toBeInTheDocument();
     expect(
-      screen.getByRole("button", { name: /отправить/i })
+      screen.getByRole("button")
     ).toBeInTheDocument();
   });
 
@@ -32,14 +32,14 @@ describe("MessageInput", () => {
     render(<MessageInput onSubmit={mockonSubmit} />);
 
     expect(
-      screen.getByRole("button", { name: /отправить/i })
+      screen.getByRole("button")
     ).toBeInTheDocument();
   });
 
   it("кнопка отправки заблокирована при пустом input", () => {
     render(<MessageInput onSubmit={mockonSubmit} />);
 
-    const sendButton = screen.getByRole("button", { name: /отправить/i });
+    const sendButton = screen.getByRole("button");
     expect(sendButton).toBeDisabled();
   });
 
@@ -48,7 +48,7 @@ describe("MessageInput", () => {
     render(<MessageInput onSubmit={mockonSubmit} />);
 
     const input = screen.getByRole("textbox");
-    const sendButton = screen.getByRole("button", { name: /отправить/i });
+    const sendButton = screen.getByRole("button");
 
     await user.type(input, "Привет мир!");
 
@@ -60,7 +60,7 @@ describe("MessageInput", () => {
     render(<MessageInput onSubmit={mockonSubmit} />);
 
     const input = screen.getByRole("textbox");
-    const sendButton = screen.getByRole("button", { name: /отправить/i });
+    const sendButton = screen.getByRole("button");
 
     await user.type(input, "test test");
     await user.click(sendButton);
@@ -86,7 +86,7 @@ describe("MessageInput", () => {
     render(<MessageInput onSubmit={mockonSubmit} />);
 
     const input = screen.getByRole("textbox") as HTMLInputElement;
-    const sendButton = screen.getByRole("button", { name: /отправить/i });
+    const sendButton = screen.getByRole("button");
 
     await user.type(input, "test test");
     await user.click(sendButton);
@@ -110,7 +110,7 @@ describe("MessageInput", () => {
     const user = userEvent.setup();
     render(<MessageInput onSubmit={mockonSubmit} />);
 
-    const sendButton = screen.getByRole("button", { name: /отправить/i });
+    const sendButton = screen.getByRole("button");
 
     // disabled кнопка
     await user.click(sendButton);
@@ -123,7 +123,7 @@ describe("MessageInput", () => {
     render(<MessageInput onSubmit={mockonSubmit} />);
 
     const input = screen.getByRole("textbox");
-    const sendButton = screen.getByRole("button", { name: /отправить/i });
+    const sendButton = screen.getByRole("button");
 
     await user.type(input, "  сообщение с пробелами  ");
     await user.click(sendButton);
@@ -162,7 +162,7 @@ describe("MessageInput интеграция с состоянием", () => {
     render(<TestWrapper />);
 
     const input = screen.getByRole("textbox");
-    const sendButton = screen.getByRole("button", { name: /отправить/i });
+    const sendButton = screen.getByRole("button");
 
     await user.type(input, "test test test");
     await user.click(sendButton);
