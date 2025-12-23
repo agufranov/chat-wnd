@@ -1,9 +1,12 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Virtuoso, type VirtuosoHandle } from "react-virtuoso";
 import style from "./MessageList.module.css";
 import type { Message } from "../../../shared/types";
 import cn from "classnames";
 import { generateAvatar } from "../../../shared/api/utils";
+import { useUnreadCount } from "./hooks/useUnreadCount";
+import { ScrollDownButton } from "./ui/ScrollDownButton/ScrollDownButton";
+import { useDebounce } from "../../../shared/hooks/useDebounce";
 
 type MessageListProps = {
   messages: Message[];
@@ -13,29 +16,47 @@ export const MessageList: React.FC<MessageListProps> = ({ messages }) => {
   const virtuosoRef = useRef<VirtuosoHandle>(null);
 
   const [atBottom, setAtBottom] = useState(true);
+  const atBottomDebounced = useDebounce(atBottom, 300);
   const [initiallyScrolled, setInitiallyScrolled] = useState(false);
 
-  useEffect(() => {
-    if (virtuosoRef.current && messages.length > 0 && atBottom) {
-      setTimeout(() => {
-        virtuosoRef.current?.scrollToIndex({
-          index: messages.length - 1,
-          align: "end",
-          behavior: initiallyScrolled ? "smooth" : "auto",
-        });
-        setInitiallyScrolled(true);
-      }, 0);
-    }
-  }, [messages.length]);
+  const unreadCount = useUnreadCount(atBottom, messages.length);
+
+  const scrollToBottom = useCallback(
+    (force = false) => {
+      if (virtuosoRef.current && messages.length > 0 && (force || atBottom)) {
+        console.log("INITIALLI", initiallyScrolled);
+        setTimeout(() => {
+          virtuosoRef.current?.scrollToIndex({
+            index: messages.length - 1,
+            align: "end",
+            behavior: initiallyScrolled ? "smooth" : "auto",
+          });
+          setInitiallyScrolled(true);
+        }, 0);
+      }
+    },
+    [initiallyScrolled, atBottom, messages.length]
+  );
+
+  useEffect(() => console.log("unread", unreadCount), [unreadCount]);
+
+  useEffect(scrollToBottom, [messages.length]);
 
   return (
-    <div className={style.chatContainer}>
+    <div className={style.container}>
+      <ScrollDownButton
+        className={cn(style.scrollDownButton, {
+          [style.scrollDownButtonHidden]: atBottomDebounced,
+        })}
+        unreadCount={unreadCount}
+        onClick={() => scrollToBottom(true)}
+      />
       <Virtuoso
         atBottomStateChange={setAtBottom}
         ref={virtuosoRef}
         data={messages}
         itemContent={(index, message) => (
-          <div className={style.gridcell}>
+          <div className={style.messageWrapper}>
             <div
               className={cn(style.message, { [style.messageMy]: message.isMy })}
             >

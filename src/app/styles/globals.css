@@ -61,12 +61,15 @@
   --color-text-primary: #4a3c2a;
   --color-text-secondary: #8b7355;
   --color-text-tertiary: #a8987a;
+  --color-text-white: #ffffff;
 
   /* Интерактивные элементы */
   --color-button-primary: var(--color-primary);
   --color-button-primary-hover: var(--color-primary-dark);
   --color-button-secondary: #e8ecef;
   --color-button-secondary-hover: #d5dbe1;
+  --color-button-tertiary: #ffffff;
+  --color-button-tertiary-hover: #eeeeee;
 
   /* Границы и разделители */
   --color-border-light: #e8ecef; /* Легкие границы */
