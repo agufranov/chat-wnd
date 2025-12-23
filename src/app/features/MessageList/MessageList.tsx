@@ -64,7 +64,7 @@ export const MessageList = forwardRef<MessageListMethods, MessageListProps>(
       <div className={style.container}>
         <ScrollDownButton
           className={cn(style.scrollDownButton, {
-            [style.scrollDownButtonHidden]: atBottomDebounced,
+            [style.scrollDownButtonHidden]: atBottomDebounced && !unreadCount,
           })}
           unreadCount={unreadCount}
           onClick={() => scrollToBottom(true)}

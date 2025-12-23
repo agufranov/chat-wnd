@@ -32,7 +32,7 @@ export const ChatList: React.FC<ChatListProps> = ({
   return (
     <ul className={style.root}>
       {loadingChats
-        ? range(8).map((_) => <ChatItemSkeleton />)
+        ? range(8).map((_, index) => <ChatItemSkeleton key={index} />)
         : sortedChats.map((chat) => {
             const avatar = generateAvatar(chat.lastMessage?.author ?? "");
             return (

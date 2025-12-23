@@ -1,0 +1,16 @@
+.main {
+  display: flex;
+  width: 100%;
+  max-width: 1080px;
+  margin: 0 auto;
+}
+
+.sidebar {
+  --width: 300px;
+  width: var(--width);
+  flex-basis: var(--width);
+}
+
+.content {
+  flex: 1;
+}
