@@ -35,8 +35,7 @@ export const formatMessageTime = (timestamp: string | Date): string => {
   return format(date, "dd.MM.yyyy, HH:mm");
 };
 
-// Или еще проще, одной функцией:
-export const formatTimeAgo = (timestamp: string | Date): string => {
+export const formatTimeAgo = (timestamp: number): string => {
   const date = new Date(timestamp);
   const now = new Date();
 

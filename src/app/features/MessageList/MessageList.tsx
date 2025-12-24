@@ -10,7 +10,7 @@ import { Virtuoso, type VirtuosoHandle } from "react-virtuoso";
 import style from "./MessageList.module.css";
 import type { Message } from "../../../shared/types";
 import cn from "classnames";
-import { generateAvatar } from "../../../shared/api/utils";
+import { generateAvatar } from "../../../shared/utils/messages";
 import { useUnreadCount } from "./hooks/useUnreadCount";
 import { ScrollDownButton } from "./ui/ScrollDownButton/ScrollDownButton";
 import { useDebounce } from "../../../shared/hooks/useDebounce";

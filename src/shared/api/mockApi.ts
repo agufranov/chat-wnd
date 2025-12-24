@@ -1,16 +1,15 @@
 import { API_AVERAGE_DELAY, INCOMING_MESSAGE_INTERVAL } from "@/constants";
 import type { Chat, Message } from "../types";
 import {
-  EventBus,
   generateChats,
-  generateFullName,
   generateMessages,
   randomId,
   randomMessage,
   rnd,
   rndFrom,
   sleep,
-} from "./utils";
+} from "../utils/messages";
+import { EventBus } from "../utils/eventBus";
 
 const debugSleep = () =>
   sleep(API_AVERAGE_DELAY + rnd(API_AVERAGE_DELAY) - API_AVERAGE_DELAY / 2);
