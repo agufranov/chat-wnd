@@ -56,8 +56,6 @@ export const MessageList = forwardRef<MessageListMethods, MessageListProps>(
       scrollToBottom: () => scrollToBottom(true),
     }));
 
-    useEffect(() => console.log("unread", unreadCount), [unreadCount]);
-
     useEffect(scrollToBottom, [messages.length]);
 
     return (

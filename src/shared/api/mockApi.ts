@@ -35,7 +35,6 @@ export const mockApi = {
 
   getMessages: async (chatId: string): Promise<Message[]> => {
     await debugSleep();
-    console.log(chatId);
     chatMessages[chatId] ??= generateMessages(chatId);
 
     return [...chatMessages[chatId]];

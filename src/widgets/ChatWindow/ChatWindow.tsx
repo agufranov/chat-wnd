@@ -17,8 +17,6 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({ chatId }) => {
     useChatStore();
   const messageListRef = useRef<MessageListMethods>(null);
 
-  useEffect(() => console.log("Loading", loadingMessages), [loadingMessages]);
-
   useEffect(() => {
     if (chatId !== null) loadMessages(chatId);
   }, [chatId]);
