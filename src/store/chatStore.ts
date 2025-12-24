@@ -53,7 +53,7 @@ export const useChatStore = create<ChatStore>()(
 
       loadMessages: async (chatId: string) => {
         set({ loadingMessages: true });
-        const messages = await mockApi.getChatMessages(chatId);
+        const messages = await mockApi.getMessages(chatId);
         set((state) => {
           state.messages[chatId] = messages;
           state.setLastMessage(state, chatId, messages[messages.length - 1]);
