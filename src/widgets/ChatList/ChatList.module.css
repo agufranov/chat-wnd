@@ -82,6 +82,11 @@
   color: var(--color-text-tertiary);
 }
 
+.draftMarker {
+  color: var(--color-text-danger);
+  font-weight: 500;
+}
+
 @media screen and (max-width: 768px) {
   .lastMessageText {
     display: none;
@@ -90,8 +95,4 @@
   .lastMessageTimestamp {
     margin-left: unset;
   }
-}
-
-@media screen and (max-width: 576px) {
-
 }

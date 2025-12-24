@@ -17,7 +17,7 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({ chatId }) => {
   const { messages, loadMessages, sendMessage, loadingMessages } =
     useChatStore();
 
-  const { setDraft, clearDraft } = useDraftStore();
+  const { getDraft, setDraft, clearDraft } = useDraftStore();
 
   const messageListRef = useRef<MessageListMethods>(null);
 
@@ -44,7 +44,11 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({ chatId }) => {
       ) : chatId ? (
         <>
           <MessageList messages={messages[chatId] ?? []} ref={messageListRef} />
-          <MessageInput onInput={handleInput} onSubmit={handleSubmit} />
+          <MessageInput
+            initialValue={getDraft(chatId)}
+            onInput={handleInput}
+            onSubmit={handleSubmit}
+          />
         </>
       ) : (
         <span>Выберите чат</span>

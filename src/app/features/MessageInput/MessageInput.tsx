@@ -12,19 +12,24 @@ import Send from "./assets/send.svg";
 import cn from "classnames";
 
 type MessageInputProps = {
+  initialValue?: string;
   onInput: (message: string) => void;
   onSubmit: (message: string) => void;
 };
 
 export const MessageInput: React.FC<MessageInputProps> = ({
+  initialValue,
   onInput,
   onSubmit,
 }) => {
-  const [inputState, setInputState] = useState("");
+  const [inputState, setInputState] = useState(initialValue ?? "");
   const inputRef = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
-    inputRef.current?.focus();
+    if (!inputRef.current) return;
+    inputRef.current.focus();
+    const length = inputRef.current.value.length;
+    inputRef.current.setSelectionRange(length, length);
   }, []);
 
   const handleSubmit = (e?: FormEvent) => {

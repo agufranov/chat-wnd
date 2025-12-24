@@ -62,11 +62,21 @@ export const ChatList: React.FC<ChatListProps> = ({
                   {chat.lastMessage && (
                     <div className={style.lastMessage}>
                       <span className={style.lastMessageText}>
-                        <span className={style.lastMessageAuthor}>
-                          {getDraft(chat.id) ??
-                            chat.lastMessage.author?.split(" ")[0]}
-                        </span>
-                        : {chat.lastMessage.text}
+                        {getDraft(chat.id) && selectedChat?.id !== chat.id ? (
+                          <>
+                            <span className={style.draftMarker}>
+                              Черновик:{" "}
+                            </span>
+                            <span>{getDraft(chat.id)}</span>
+                          </>
+                        ) : (
+                          <>
+                            <span className={style.lastMessageAuthor}>
+                              {chat.lastMessage.author?.split(" ")[0]}
+                            </span>
+                            : {chat.lastMessage.text}
+                          </>
+                        )}
                       </span>
                       <span className={style.lastMessageTimestamp}>
                         {formatTimeAgo(chat.lastMessage.timestamp)}
