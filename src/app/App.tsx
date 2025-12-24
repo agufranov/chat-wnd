@@ -1,30 +1,15 @@
-import { useEffect, useState } from "react";
-import { ChatList } from "../widgets/ChatList/ChatList";
-import { ChatWindow } from "../widgets/ChatWindow/ChatWindow";
-import style from "./App.module.css";
-import type { Chat } from "../shared/types";
+import { useEffect } from "react";
 import { useChatStore } from "../store/chatStore";
+import { MainPage } from "@/pages/MainPage/MainPage";
 
 function App() {
   const { subscribe } = useChatStore();
 
-  const [selectedChat, setSelectedChat] = useState<Chat | null>(null);
+  useEffect(() => {
+    return subscribe();
+  }, []);
 
-  useEffect(() => subscribe(), []);
-
-  return (
-    <main className={style.main}>
-      <aside className={style.sidebar}>
-        <ChatList
-          selectedChat={selectedChat}
-          onChatSelected={setSelectedChat}
-        />
-      </aside>
-      <section className={style.content}>
-        <ChatWindow key={selectedChat?.id} chatId={selectedChat?.id ?? null} />
-      </section>
-    </main>
-  );
+  return <MainPage />;
 }
 
 export default App;

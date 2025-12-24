@@ -1,4 +1,4 @@
-import { INCOMING_MESSAGE_INTERVAL } from "@/constants";
+import { API_AVERAGE_DELAY, INCOMING_MESSAGE_INTERVAL } from "@/constants";
 import type { Chat, Message } from "../types";
 import {
   EventBus,
@@ -12,9 +12,8 @@ import {
   sleep,
 } from "./utils";
 
-const AVG_DELAY = 1000;
-
-const debugSleep = () => sleep(AVG_DELAY + rnd(AVG_DELAY) - AVG_DELAY / 2);
+const debugSleep = () =>
+  sleep(API_AVERAGE_DELAY + rnd(API_AVERAGE_DELAY) - API_AVERAGE_DELAY / 2);
 
 const chats = generateChats();
 
@@ -76,4 +75,4 @@ export const mockApi = {
 
 setInterval(() => {
   mockApi.addIncomingMessage();
-}, INCOMING_MESSAGE_INTERVAL);
+}, INCOMING_MESSAGE_INTERVAL / 2 + rnd(INCOMING_MESSAGE_INTERVAL));
