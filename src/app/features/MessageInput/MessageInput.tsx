@@ -12,10 +12,14 @@ import Send from "./assets/send.svg";
 import cn from "classnames";
 
 type MessageInputProps = {
+  onInput: (message: string) => void;
   onSubmit: (message: string) => void;
 };
 
-export const MessageInput: React.FC<MessageInputProps> = ({ onSubmit }) => {
+export const MessageInput: React.FC<MessageInputProps> = ({
+  onInput,
+  onSubmit,
+}) => {
   const [inputState, setInputState] = useState("");
   const inputRef = useRef<HTMLTextAreaElement>(null);
 
@@ -42,6 +46,7 @@ export const MessageInput: React.FC<MessageInputProps> = ({ onSubmit }) => {
   const handleInput: FormEventHandler<HTMLTextAreaElement> = (e) => {
     setInputState(e.currentTarget.value);
     adjustHeight();
+    onInput(e.currentTarget.value);
   };
 
   const handleKeyDown: KeyboardEventHandler = (e) => {

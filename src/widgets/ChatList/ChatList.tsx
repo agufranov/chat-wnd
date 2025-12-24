@@ -6,6 +6,7 @@ import cn from "classnames";
 import { formatTimeAgo } from "../../shared/utils/date";
 import { generateAvatar, range } from "../../shared/utils/messages";
 import { ChatItemSkeleton } from "./ui/ChatItemSkeleton/ChatItemSkeleton";
+import { useDraftStore } from "@/store/draftStore";
 
 const CHAT_SKELETONS_COUNT = 12;
 
@@ -19,6 +20,7 @@ export const ChatList: React.FC<ChatListProps> = ({
   onChatSelected,
 }) => {
   const { chats, loadChats, loadingChats } = useChatStore();
+  const { getDraft } = useDraftStore();
 
   useEffect(() => {
     loadChats();
@@ -61,7 +63,8 @@ export const ChatList: React.FC<ChatListProps> = ({
                     <div className={style.lastMessage}>
                       <span className={style.lastMessageText}>
                         <span className={style.lastMessageAuthor}>
-                          {chat.lastMessage.author?.split(" ")[0]}
+                          {getDraft(chat.id) ??
+                            chat.lastMessage.author?.split(" ")[0]}
                         </span>
                         : {chat.lastMessage.text}
                       </span>
