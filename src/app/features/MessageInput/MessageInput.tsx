@@ -13,7 +13,7 @@ import cn from "classnames";
 
 type MessageInputProps = {
   initialValue?: string;
-  onInput: (message: string) => void;
+  onInput?: (message: string) => void;
   onSubmit: (message: string) => void;
 };
 
@@ -51,7 +51,7 @@ export const MessageInput: React.FC<MessageInputProps> = ({
   const handleInput: FormEventHandler<HTMLTextAreaElement> = (e) => {
     setInputState(e.currentTarget.value);
     adjustHeight();
-    onInput(e.currentTarget.value);
+    onInput?.(e.currentTarget.value);
   };
 
   const handleKeyDown: KeyboardEventHandler = (e) => {
