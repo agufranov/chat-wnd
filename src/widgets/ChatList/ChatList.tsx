@@ -3,8 +3,8 @@ import { useChatStore } from "../../store/chatStore";
 import type { Chat } from "../../shared/types";
 import style from "./ChatList.module.css";
 import cn from "classnames";
-import { formatTimeAgo } from "../../shared/api/date";
-import { generateAvatar, range } from "../../shared/api/utils";
+import { formatTimeAgo } from "../../shared/utils/date";
+import { generateAvatar, range } from "../../shared/utils/messages";
 import { ChatItemSkeleton } from "./ui/ChatItemSkeleton/ChatItemSkeleton";
 
 const CHAT_SKELETONS_COUNT = 12;
@@ -66,7 +66,7 @@ export const ChatList: React.FC<ChatListProps> = ({
                         : {chat.lastMessage.text}
                       </span>
                       <span className={style.lastMessageTimestamp}>
-                        {formatTimeAgo(new Date(chat.lastMessage.timestamp))}
+                        {formatTimeAgo(chat.lastMessage.timestamp)}
                       </span>
                     </div>
                   )}

@@ -2,7 +2,7 @@ import { create } from "zustand";
 import type { Chat, Message } from "../shared/types";
 import { mockApi } from "../shared/api/mockApi";
 import { immer } from "zustand/middleware/immer";
-import { randomId } from "../shared/api/utils";
+import { randomId } from "../shared/utils/messages";
 import type { WritableDraft } from "immer";
 
 type ChatStore = {
