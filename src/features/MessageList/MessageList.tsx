@@ -8,14 +8,14 @@ import {
 } from "react";
 import { Virtuoso, type VirtuosoHandle } from "react-virtuoso";
 import style from "./MessageList.module.css";
-import type { Message } from "../../../shared/types";
+import type { Message } from "@/shared/types";
 import cn from "classnames";
-import { generateAvatar } from "../../../shared/utils/messages";
+import { generateAvatar } from "@/shared/utils/messages";
 import { useUnreadCount } from "./hooks/useUnreadCount";
 import { ScrollDownButton } from "./ui/ScrollDownButton/ScrollDownButton";
-import { useDebounce } from "../../../shared/hooks/useDebounce";
-import { Spinner } from "../../../shared/ui/Spinner/Spinner";
-import { useChatStore } from "../../../store/chatStore";
+import { useDebounce } from "@/shared/hooks/useDebounce";
+import { Spinner } from "@/shared/ui/Spinner/Spinner";
+import { useChatStore } from "@/store/chatStore";
 
 export type MessageListMethods = {
   scrollToBottom: () => void;

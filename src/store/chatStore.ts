@@ -1,9 +1,9 @@
-import { create } from "zustand";
-import type { Chat, Message } from "../shared/types";
-import { mockApi } from "../shared/api/mockApi";
-import { immer } from "zustand/middleware/immer";
-import { randomId } from "../shared/utils/messages";
+import { mockApi } from "@/shared/api/mockApi";
+import type { Chat, Message } from "@/shared/types";
+import { randomId } from "@/shared/utils/messages";
 import type { WritableDraft } from "immer";
+import { create } from "zustand";
+import { immer } from "zustand/middleware/immer";
 
 type ChatStore = {
   chats: Chat[];

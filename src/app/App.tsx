@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useChatStore } from "../store/chatStore";
+import { useChatStore } from "@/store/chatStore";
 import { MainPage } from "@/pages/MainPage/MainPage";
 
 function App() {

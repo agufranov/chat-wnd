@@ -1,23 +1,16 @@
-import React from "react";
-import {
-  render,
-  screen,
-  fireEvent,
-  waitFor,
-  within,
-} from "@testing-library/react";
+import type { Chat } from "@/shared/types";
+import { formatTimeAgo } from "@/shared/utils/date";
+import { generateAvatar } from "@/shared/utils/messages";
+import { useChatStore } from "@/store/chatStore";
+import { render, screen, within } from "@testing-library/react";
 import { ChatList } from "./ChatList";
-import { useChatStore } from "../../store/chatStore";
-import { formatTimeAgo } from "../../shared/utils/date";
-import { generateAvatar } from "../../shared/utils/messages";
-import type { Chat } from "../../shared/types";
 
 // Мокаем зависимости
-jest.mock("../../store/chatStore", () => ({
+jest.mock("@/store/chatStore", () => ({
   useChatStore: jest.fn(),
 }));
-jest.mock("../../shared/utils/date");
-jest.mock("../../shared/utils/messages", () => ({
+jest.mock("@/shared/utils/date");
+jest.mock("@/shared/utils/messages", () => ({
   generateAvatar: jest.fn(() => ({ text: "JD", color: "#FF5733" })),
   range: jest.fn((count: number) => Array.from({ length: count }, (_, i) => i)),
 }));
@@ -141,7 +134,8 @@ describe("ChatList", () => {
       const items = screen.getAllByRole("listitem");
       const chatNames = items.map(
         (item) =>
-          within(item).getByText(/Иван Иванов|Алиса Петрова|Work Group/).textContent
+          within(item).getByText(/Иван Иванов|Алиса Петрова|Work Group/)
+            .textContent
       );
 
       // Ожидаемый порядок: Work Group (30 мин), Иван Иванов (1 час), Алиса Петрова (2 часа)

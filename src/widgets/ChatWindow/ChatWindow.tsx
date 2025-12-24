@@ -1,13 +1,13 @@
-import { MessageInput } from "@/app/features/MessageInput/MessageInput";
+import { MessageInput } from "@/features/MessageInput/MessageInput";
 import {
   MessageList,
   type MessageListMethods,
-} from "@/app/features/MessageList/MessageList";
-import { useChatStore } from "../../store/chatStore";
+} from "@/features/MessageList/MessageList";
+import { Spinner } from "@/shared/ui/Spinner/Spinner";
+import { useChatStore } from "@/store/chatStore";
+import { useDraftStore } from "@/store/draftStore";
 import { useEffect, useRef } from "react";
 import style from "./ChatWindow.module.css";
-import { Spinner } from "../../shared/ui/Spinner/Spinner";
-import { useDraftStore } from "@/store/draftStore";
 
 type ChatWindowProps = {
   chatId: string | null;

@@ -1,12 +1,12 @@
-import React, { useEffect, useMemo } from "react";
-import { useChatStore } from "../../store/chatStore";
-import type { Chat } from "../../shared/types";
-import style from "./ChatList.module.css";
-import cn from "classnames";
-import { formatTimeAgo } from "../../shared/utils/date";
-import { generateAvatar, range } from "../../shared/utils/messages";
-import { ChatItemSkeleton } from "./ui/ChatItemSkeleton/ChatItemSkeleton";
+import type { Chat } from "@/shared/types";
+import { formatTimeAgo } from "@/shared/utils/date";
+import { generateAvatar, range } from "@/shared/utils/messages";
+import { useChatStore } from "@/store/chatStore";
 import { useDraftStore } from "@/store/draftStore";
+import cn from "classnames";
+import React, { useEffect, useMemo } from "react";
+import style from "./ChatList.module.css";
+import { ChatItemSkeleton } from "./ui/ChatItemSkeleton/ChatItemSkeleton";
 
 const CHAT_SKELETONS_COUNT = 12;
 
