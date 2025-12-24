@@ -9,8 +9,21 @@
   --width: 300px;
   width: var(--width);
   flex-basis: var(--width);
+  transition: all ease 0.3s;
 }
 
 .content {
   flex: 1;
+}
+
+@media screen and (max-width: 768px) {
+  .sidebar {
+    --width: 144px;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .sidebar {
+    --width: 64px;
+  }
 }

@@ -47,9 +47,16 @@
   flex: 0 0 auto;
 }
 
-.messagePreview {
+.text {
   flex: 1;
   overflow: hidden;
+}
+
+.chatName {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-size: 15px;
 }
 
 .lastMessage {
@@ -73,4 +80,18 @@
   margin-left: auto;
   white-space: nowrap;
   color: var(--color-text-tertiary);
+}
+
+@media screen and (max-width: 768px) {
+  .lastMessageText {
+    display: none;
+  }
+
+  .lastMessageTimestamp {
+    margin-left: unset;
+  }
+}
+
+@media screen and (max-width: 576px) {
+
 }

@@ -55,8 +55,8 @@ export const ChatList: React.FC<ChatListProps> = ({
                 >
                   {avatar.text}
                 </div>
-                <div className={style.messagePreview}>
-                  <div>{chat.name}</div>
+                <div className={style.text}>
+                  <div className={style.chatName}>{chat.name}</div>
                   {chat.lastMessage && (
                     <div className={style.lastMessage}>
                       <span className={style.lastMessageText}>
